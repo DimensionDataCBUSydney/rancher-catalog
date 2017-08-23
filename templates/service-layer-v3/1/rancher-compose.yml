@@ -1,0 +1,26 @@
+.catalog:
+  name: "service-layer-v3"
+  description: "service layer v3"
+  version: "0.8-rancher1"
+  upgrade_from: 0.0.0-rancher1
+  uuid: servicelayer3-1
+  questions:
+    - variable: consul_configs
+      label: "consul initial configs"
+      required: true
+      default: "sl3_api.hostname=mci.ci.dimensiondata.cloud"
+    - variable: cert_name
+      label: "public cert name in the artifactory"
+      required: true
+      default: "star_ci_dimensiondata_cloud"
+    - variable: apiKey
+      label: "Artifactory API Key"
+      required: true
+    - variable: consul_bootstrap_expect
+      label: "consul number of servers to bootstrap"
+      required: true
+      default: true
+consul:
+  scale: 3
+nginx:
+  scale: 3

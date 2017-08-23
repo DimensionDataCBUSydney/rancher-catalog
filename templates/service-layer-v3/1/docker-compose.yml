@@ -1,0 +1,67 @@
+version: '2'
+services:
+  nginx-config:
+    image: artifactory.devops.itaas-cloud.com:6553/nginx-config
+    network_mode: none
+    entrypoint:
+      - /bin/true
+    environment:
+      - configs=$consul_configs
+    volumes:
+      - /etc/nginx/config
+
+  nginx-ssl:
+    image: artifactory.devops.itaas-cloud.com:6553/nginx-ssl
+    entrypoint:
+      - /bin/true
+    environment:
+      - cert=$cert_name
+      - apiKey=$apiKey
+    volumes:
+      - /etc/nginx/ssl
+  
+  nginx:
+    image: artifactory.devops.itaas-cloud.com:6553/nginx-consultemplate
+    depends_on:
+      - "nginx-config"
+      - "nginx-ssl"
+      - "consul"
+    environment:
+      - CONSUL_PORT_8500_TCP_ADDR=consul
+      - LOG_LEVEL=debug
+      - CONSUL_KV_PREFIX=nginx
+      - CONFIG_JSON=/etc/nginx/config/consul_nginx_initial_config.json
+      - CONFIG_JSON_LOAD=true  #remove this env variable to not load the ininital settings from json file
+      - SERVICE_IGNORE=true
+    links:
+      - consul
+    ports:
+      - 80:80
+      - 443:443
+      - 5671:5671
+      - 8080:8080
+      - 8300:8300
+      - 8301:8301
+      - 8301:8301/udp
+      - 8302:8302
+      - 8302:8302/udp
+      - 127.0.0.1:8500:8500
+      - 127.0.0.1:8600:8600
+      - 127.0.0.1:8600:8600/udp
+    volumes:
+      - sl3_nginx_log:/var/log/nginx
+    volumes_from:
+      - nginx-config
+      - nginx-ssl
+  
+  consul:
+    image: consul:0.7.3
+    command: agent -server -bootstrap-expect=$consul_bootstrap_expect -ui-dir /ui -bind 0.0.0.0 -client=0.0.0.0 -advertise=0.0.0.0
+    environment:
+      - SERVICE_IGNORE=true
+    volumes:
+      - sl3_consul_data:/consul/data
+  
+volumes:
+  sl3_nginx_log:
+  sl3_consul_data:
