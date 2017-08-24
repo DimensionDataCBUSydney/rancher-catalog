@@ -1,0 +1,29 @@
+.catalog:
+  name: "service-layer-v3-test"
+  description: "service layer v3"
+  version: "0.1"
+  uuid: servicelayer3-1
+  questions:
+    - variable: consul_configs
+      label: "consul initial configs"
+      type: "string"
+      required: true
+      default: "sl3_api.hostname=mci.ci.dimensiondata.cloud"
+    - variable: cert_name
+      label: "public cert name in the artifactory"
+      type: "string"
+      required: true
+      default: "star_ci_dimensiondata_cloud"
+    - variable: apiKey
+      label: "Artifactory API Key"
+      type: "string"
+      required: true
+    - variable: consul_bootstrap_expect
+      label: "consul number of servers to bootstrap"
+      required: true
+      type: "string"
+      default: "3"
+consul-1:
+  scale: 1
+consul-2:
+  scale: 2
