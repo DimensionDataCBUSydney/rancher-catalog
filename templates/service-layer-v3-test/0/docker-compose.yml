@@ -1,7 +1,7 @@
 version: '2'
 services:
   nginx-config:
-    image: artifactory.devops.itaas-cloud.com:6553/nginx-config:1.0.7921_3cf6269c
+    image: artifactory.devops.itaas-cloud.com:6553/nginx-config:1.0.7922_6d499d09
     network_mode: none
     entrypoint:
       - /bin/true
@@ -13,7 +13,7 @@ services:
       io.rancher.container.hostname_override: container_name
       io.rancher.container.start_once: true
   nginx-ssl:
-    image: artifactory.devops.itaas-cloud.com:6553/nginx-ssl:1.0.7921_3cf6269c
+    image: artifactory.devops.itaas-cloud.com:6553/nginx-ssl:1.0.7922_6d499d09
     entrypoint:
       - /bin/true
     environment:
@@ -36,7 +36,7 @@ services:
       - /var/log/nginx
   
   nginx:
-    image: artifactory.devops.itaas-cloud.com:6553/nginx-consultemplate:1.0.7921_3cf6269c
+    image: artifactory.devops.itaas-cloud.com:6553/nginx-consultemplate:1.0.7922_6d499d09
     # depends_on:
     #   - "nginx-config"
     #   - "nginx-ssl"
