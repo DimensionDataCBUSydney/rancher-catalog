@@ -111,8 +111,6 @@ services:
     cap_add:
       - IPC_LOCK
     entrypoint: vault server -config=/vault/config/
-    links:
-      - nginx:consul
     volumes_from:
       - vault-data
     labels:
@@ -134,6 +132,8 @@ services:
   vault:
     image: artifactory.devops.itaas-cloud.com:6553/vault-config:1.0.8004_584fd930
     entrypoint: confd -backend "rancher" -prefix "/2015-07-25"
+    links:
+      - nginx:consul
     volumes_from:
       - vault-data
     labels:
