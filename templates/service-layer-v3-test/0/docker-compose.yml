@@ -108,8 +108,7 @@ services:
   
   vault-config:
     image: artifactory.devops.itaas-cloud.com:6553/vault-config:1.0.8003_a76ff096
-    entrypoint:
-      - confd -backend "rancher"
+    entrypoint: confd -backend "rancher"
     volumes:
       - /vault/config
     labels:
