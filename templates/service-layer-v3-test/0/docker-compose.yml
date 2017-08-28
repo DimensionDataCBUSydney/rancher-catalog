@@ -122,11 +122,10 @@ services:
 
   vault-1:
     image: vault:latest
-    cap_add:
-      - IPC_LOCK
     volumes_from:
       - vault-config
-    entrypoint: vault server -config=/vault/config/
+    entrypoint: 
+      - vault server -config=/vault/config/
     links:
       - consul-2:consul
     labels:
