@@ -119,18 +119,18 @@ services:
     labels:
       io.rancher.container.hostname_override: container_name
 
-vault-data:
-  image: alpine:latest
-  entrypoint:
-    - /bin/true
-  labels:
-    io.rancher.container.hostname_override: container_name
-    io.rancher.container.start_once: true
-  volumes:
-    - /vault/config
-    - /opt/rancher/bin
-    - /opt/rancher/ssl
-    - /opt/rancher/config
+  vault-data:
+    image: alpine:latest
+    entrypoint:
+      - /bin/true
+    labels:
+      io.rancher.container.hostname_override: container_name
+      io.rancher.container.start_once: true
+    volumes:
+      - /vault/config
+      - /opt/rancher/bin
+      - /opt/rancher/ssl
+      - /opt/rancher/config
   
   vault:
     image: artifactory.devops.itaas-cloud.com:6553/vault-config:1.0.8004_584fd930
