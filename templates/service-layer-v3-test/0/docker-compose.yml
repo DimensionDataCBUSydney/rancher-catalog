@@ -1,7 +1,7 @@
 version: '2'
 services:
   nginx-config:
-    image: artifactory.devops.itaas-cloud.com:6553/nginx-config:1.0.7980_b28a9837
+    image: artifactory.devops.itaas-cloud.com:6553/nginx-config:1.0.8000_e5f1c173
     environment:
       - configs=$consul_configs
     volumes:
@@ -10,7 +10,7 @@ services:
       io.rancher.container.hostname_override: container_name
       io.rancher.container.start_once: true
   nginx-ssl:
-    image: artifactory.devops.itaas-cloud.com:6553/nginx-ssl:1.0.7980_b28a9837
+    image: artifactory.devops.itaas-cloud.com:6553/nginx-ssl:1.0.8000_e5f1c173
     environment:
       - cert=$cert_name
       - apiKey=$apiKey
@@ -31,7 +31,7 @@ services:
       - /var/log/nginx
   
   nginx:
-    image: artifactory.devops.itaas-cloud.com:6553/nginx-consultemplate:1.0.7980_b28a9837
+    image: artifactory.devops.itaas-cloud.com:6553/nginx-consultemplate:1.0.8000_e5f1c173
     environment:
       - CONSUL_PORT_8500_TCP_ADDR=consul
       - LOG_LEVEL=debug
@@ -107,7 +107,7 @@ services:
       io.rancher.sidekicks: consul-data-2
   
   vault-config:
-    image: artifactory.devops.itaas-cloud.com:6553/vault-config:1.0.7980_b28a9837
+    image: artifactory.devops.itaas-cloud.com:6553/vault-config:1.0.8000_e5f1c173
     entrypoint:
       - /bin/true
     volumes:
@@ -120,12 +120,13 @@ services:
     image: vault:latest
     cap_add:
       - IPC_LOCK
+    environment:
+      - SERVICE_NAME=vault
     entrypoint: vault server -config=/vault/config/
     volumes_from:
       - vault-config
     links:
-      - consul-1:consul
-      - consul-2:consul
+      - nginx:consul
     labels:
       io.rancher.container.hostname_override: container_name
       io.rancher.sidekicks: vault-config
