@@ -58,6 +58,8 @@ services:
       - 8500:8500
       - 8600:8600
       - 8600:8600/udp
+      - 8200:8200
+      - 8201:8201
     volumes_from:
       - nginx-config
       - nginx-ssl
@@ -125,11 +127,7 @@ services:
     volumes_from:
       - vault-config
     entrypoint: vault server -config=/vault/config/
-    ports:
-      - 8200:8200
-      - 8201:8201
     links:
-      - consul-1:consul
       - consul-2:consul
     labels:
       io.rancher.container.hostname_override: container_name
