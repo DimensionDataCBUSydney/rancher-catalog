@@ -108,6 +108,9 @@ services:
 
   vault:
     image: artifactory.devops.itaas-cloud.com:6553/sl3-vault:1.0.8011_05ac8570
+    cap_add:
+      - IPC_LOCK
+    command: vault server -config=/vault/config/vault.json
     links:
       - nginx:consul
     labels:
