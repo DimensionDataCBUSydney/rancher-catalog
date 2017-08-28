@@ -106,27 +106,22 @@ services:
       io.rancher.container.hostname_override: container_name
       io.rancher.sidekicks: consul-data-2
   
-  vault-config:
-    image: artifactory.devops.itaas-cloud.com:6553/vault-config:1.0.8000_e5f1c173
-    entrypoint:
-      - /bin/true
-    volumes:
-      - /vault/config
-    labels:
-      io.rancher.container.hostname_override: container_name
-      io.rancher.container.start_once: true
- 
-  vault-1:
+  vault-base:
     image: vault:latest
     cap_add:
       - IPC_LOCK
     environment:
       - SERVICE_NAME=vault
     entrypoint: vault server -config=/vault/config/
-    volumes_from:
-      - vault-config
     links:
       - nginx:consul
     labels:
       io.rancher.container.hostname_override: container_name
-      io.rancher.sidekicks: vault-config
+
+  vault:
+    image: artifactory.devops.itaas-cloud.com:6553/vault-config:1.0.8000_e5f1c173
+    entrypoint:
+      - confd -backend "rancher"
+    labels:
+      io.rancher.container.hostname_override: container_name
+      io.rancher.sidekicks: vault-base
