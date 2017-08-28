@@ -114,7 +114,10 @@ services:
       - /bin/true
     volumes:
       - /vault/config
-  
+    labels:
+      io.rancher.container.hostname_override: container_name
+      io.rancher.container.start_once: true
+
   vault-1:
     image: vault:latest
     cap_add:
@@ -128,3 +131,5 @@ services:
     links:
       - consul-1:consul
       - consul-2:consul
+    labels:
+      io.rancher.container.hostname_override: container_name
