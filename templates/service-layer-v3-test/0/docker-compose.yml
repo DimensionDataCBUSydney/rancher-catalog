@@ -108,13 +108,13 @@ services:
   
   vault-config:
     image: artifactory.devops.itaas-cloud.com:6553/vault-config:1.0.8003_a76ff096
-    entrypoint: confd -backend "rancher"
+    entrypoint: confd -backend "rancher" -prefix "/2015-07-25"
     volumes:
       - /vault/config
     labels:
       io.rancher.container.hostname_override: container_name
       
-  vault-base:
+  vault:
     image: vault:latest
     cap_add:
       - IPC_LOCK
