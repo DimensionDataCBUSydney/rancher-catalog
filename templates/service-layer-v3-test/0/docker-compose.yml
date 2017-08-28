@@ -111,7 +111,6 @@ services:
     cap_add:
       - IPC_LOCK
     entrypoint: vault server -config=/vault/config/
-    network_mode: "container:vault"
     links:
       - nginx:consul
     volumes_from:
