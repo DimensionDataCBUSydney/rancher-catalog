@@ -119,14 +119,14 @@ services:
     labels:
       io.rancher.container.hostname_override: container_name
       io.rancher.container.start_once: true
-
+ 
   vault-1:
     image: vault:latest
+    command: vault server -config=/vault/config/
     volumes_from:
       - vault-config
-    entrypoint: 
-      - vault server -config=/vault/config/
     links:
       - consul-2:consul
     labels:
       io.rancher.container.hostname_override: container_name
+      io.rancher.sidekicks: vault-config
