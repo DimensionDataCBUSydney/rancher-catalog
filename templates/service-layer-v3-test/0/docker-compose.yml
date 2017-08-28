@@ -139,7 +139,7 @@ services:
       - vault-data
     labels:
       io.rancher.container.hostname_override: container_name
-      io.rancher.sidekicks: vault-base. vault-data
+      io.rancher.sidekicks: vault-base,vault-data
       
   
       
