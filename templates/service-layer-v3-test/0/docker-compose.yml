@@ -117,13 +117,30 @@ services:
       - nginx:consul
     labels:
       io.rancher.container.hostname_override: container_name
+      io.rancher.sidekicks: vault-init
+  
+  vault-config:
+    image: alpine:latest
+      entrypoint:
+        - /bin/true
+      labels:
+        io.rancher.container.hostname_override: container_name
+        io.rancher.container.start_once: true
+      volumes:
+        - /opt/vault-init
 
   vault-init:
     image: artifactory.devops.itaas-cloud.com:6553/sl3-vault-init:1.0.8205_7c9fe205
-    entrypoint:
-      - bash
+    depends_on:
+        vault:
+          condition: service_healthy
+        vault-config:
+    volumes_from:
+      - vault-config
     labels:
       io.rancher.container.hostname_override: container_name
+      io.rancher.container.start_once: true
+
       
   
       
