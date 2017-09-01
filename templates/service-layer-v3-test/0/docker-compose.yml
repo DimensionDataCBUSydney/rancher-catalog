@@ -117,7 +117,7 @@ services:
       - nginx:consul
     labels:
       io.rancher.container.hostname_override: container_name
-      io.rancher.sidekicks: vault-init,vault-wait
+      io.rancher.sidekicks: vault-init
   
   # vault-config:
   #   image: alpine:latest
