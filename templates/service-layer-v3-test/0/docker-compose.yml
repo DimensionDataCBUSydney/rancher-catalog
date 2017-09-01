@@ -119,33 +119,32 @@ services:
       io.rancher.container.hostname_override: container_name
       io.rancher.sidekicks: vault-init,vault-wait
   
-  vault-config:
-    image: alpine:latest
-    entrypoint:
-      - /bin/true
-    labels:
-      io.rancher.container.hostname_override: container_name
-      io.rancher.container.start_once: true
-    volumes:
-      - /opt/vault-init
+  # vault-config:
+  #   image: alpine:latest
+  #   entrypoint:
+  #     - /bin/true
+  #   labels:
+  #     io.rancher.container.hostname_override: container_name
+  #     io.rancher.container.start_once: true
+  #   volumes:
+  #     - /opt/vault-init
 
-  vault-wait:
-    image: waisbrot/wait
-    links:
-      - vault
-    environment:
-      - TARGETS=vault:9200
-    labels:
-      io.rancher.container.hostname_override: container_name
-      io.rancher.container.start_once: true
+  # vault-wait:
+  #   image: waisbrot/wait
+  #   links:
+  #     - vault
+  #   environment:
+  #     - TARGETS=vault:9200
+  #   labels:
+  #     io.rancher.container.hostname_override: container_name
+  #     io.rancher.container.start_once: true
 
   vault-init:
     image: artifactory.devops.itaas-cloud.com:6553/sl3-vault-init:1.0.8206_e54d27da
     depends_on:
-        - vault-wait
-        - vault-config
-    volumes_from:
-      - vault-config
+      - vault
+    # volumes_from:
+    #   - vault-config
     labels:
       io.rancher.container.hostname_override: container_name
       io.rancher.container.start_once: true
