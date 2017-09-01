@@ -135,6 +135,9 @@ services:
       - vault
     environment:
       - TARGETS=vault:9200
+    labels:
+      io.rancher.container.hostname_override: container_name
+      io.rancher.container.start_once: true
 
   vault-init:
     image: artifactory.devops.itaas-cloud.com:6553/sl3-vault-init:1.0.8206_e54d27da
