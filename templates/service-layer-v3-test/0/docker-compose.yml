@@ -130,9 +130,8 @@ services:
     labels:
       io.rancher.container.hostname_override: container_name
       io.rancher.container.start_once: true
-
 volumes:
-  vault_init_volume:
+  vault_init_volume: {}
 
       
   
