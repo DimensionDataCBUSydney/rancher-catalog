@@ -113,8 +113,8 @@ services:
     environment:
       - VAULT_REDIRECT_INTERFACE=eth0
     command: vault server -config=/vault/config/vault.json
-    volumes_from:
-      - vault_init_volume:/opt/vault-init
+    # volumes_from:
+    #   - vault_init_volume:/opt/vault-init
     links:
       - nginx:consul
     labels:
@@ -125,8 +125,8 @@ services:
     image: artifactory.devops.itaas-cloud.com:6553/sl3-vault-init:1.0.8255_f055df93
     depends_on:
       - vault
-    volumes_from:
-      - vault_init_volume:/opt/vault-init
+    # volumes_from:
+    #   - vault_init_volume:/opt/vault-init
     labels:
       io.rancher.container.hostname_override: container_name
       io.rancher.container.start_once: true
