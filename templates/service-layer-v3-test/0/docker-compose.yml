@@ -113,41 +113,26 @@ services:
     environment:
       - VAULT_REDIRECT_INTERFACE=eth0
     command: vault server -config=/vault/config/vault.json
+    volumes_from:
+      - vault_init_volume:/opt/vault-init
     links:
       - nginx:consul
     labels:
       io.rancher.container.hostname_override: container_name
       io.rancher.sidekicks: vault-init
-  
-  # vault-config:
-  #   image: alpine:latest
-  #   entrypoint:
-  #     - /bin/true
-  #   labels:
-  #     io.rancher.container.hostname_override: container_name
-  #     io.rancher.container.start_once: true
-  #   volumes:
-  #     - /opt/vault-init
-
-  # vault-wait:
-  #   image: waisbrot/wait
-  #   links:
-  #     - vault
-  #   environment:
-  #     - TARGETS=vault:9200
-  #   labels:
-  #     io.rancher.container.hostname_override: container_name
-  #     io.rancher.container.start_once: true
 
   vault-init:
     image: artifactory.devops.itaas-cloud.com:6553/sl3-vault-init:1.0.8254_e43d70fb
     depends_on:
       - vault
-    # volumes_from:
-    #   - vault-config
+    volumes_from:
+      - vault_init_volume:/opt/vault-init
     labels:
       io.rancher.container.hostname_override: container_name
       io.rancher.container.start_once: true
+
+volumes:
+  vault_init_volume:
 
       
   
