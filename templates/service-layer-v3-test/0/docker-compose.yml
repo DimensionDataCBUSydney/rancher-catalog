@@ -1,7 +1,7 @@
 version: '2'
 services:
   nginx-config:
-    image: artifactory.devops.itaas-cloud.com:6553/nginx-config:1.0.8355_51e0ff4d
+    image: artifactory.devops.itaas-cloud.com:6553/nginx-config:1.0.8360_211991dd
     environment:
       - configs=$consul_configs
     volumes:
@@ -10,7 +10,7 @@ services:
       io.rancher.container.hostname_override: container_name
       io.rancher.container.start_once: true
   nginx-ssl:
-    image: artifactory.devops.itaas-cloud.com:6553/nginx-ssl:1.0.8355_51e0ff4d
+    image: artifactory.devops.itaas-cloud.com:6553/nginx-ssl:1.0.8360_211991dd
     environment:
       - cert=$cert_name
       - apiKey=$apiKey
@@ -31,7 +31,7 @@ services:
       - /var/log/nginx
 
   nginx:
-    image: artifactory.devops.itaas-cloud.com:6553/nginx-consultemplate:1.0.8355_51e0ff4d
+    image: artifactory.devops.itaas-cloud.com:6553/nginx-consultemplate:1.0.8360_211991dd
     environment:
       - CONSUL_PORT_8500_TCP_ADDR=consul
       - LOG_LEVEL=debug
@@ -39,8 +39,6 @@ services:
       - CONFIG_JSON=/etc/nginx/config/consul_nginx_initial_config.json
       - CONFIG_JSON_LOAD=true  #remove this env variable to not load the ininital settings from json file
       - SERVICE_IGNORE=true
-    links:
-      - consul-1:consul
     ports:
       - 80:80
       - 443:443
@@ -64,7 +62,7 @@ services:
       io.rancher.container.hostname_override: container_name
       io.rancher.sidekicks: nginx-config,nginx-ssl,nginx-log
 
-  consul-data-1:
+  consul-data:
     image: alpine:latest
     entrypoint:
       - /bin/true
@@ -74,37 +72,16 @@ services:
     volumes:
       - /consul/data
 
-  consul-data-2:
-    image: alpine:latest
-    entrypoint:
-      - /bin/true
-    labels:
-      io.rancher.container.hostname_override: container_name
-      io.rancher.container.start_once: true
-    volumes:
-      - /consul/data
-
-  consul-1:
-    image: consul:0.7.3
-    command: agent -server -bootstrap-expect=$consul_bootstrap_expect -ui-dir /ui -bind 0.0.0.0 -client=0.0.0.0
+  consul:
+    image: artifactory.devops.itaas-cloud.com:6553/consul-base:1.0.8360_211991dd
     environment:
       - SERVICE_IGNORE=true
+      - rancher=1
     volumes_from:
-      - consul-data-1
+      - consul-data
     labels:
       io.rancher.container.hostname_override: container_name
-      io.rancher.sidekicks: consul-data-1
-
-  consul-2:
-    image: consul:0.7.3
-    command: agent -server -join consul-1
-    environment:
-      - SERVICE_IGNORE=true
-    volumes_from:
-      - consul-data-2
-    labels:
-      io.rancher.container.hostname_override: container_name
-      io.rancher.sidekicks: consul-data-2
+      io.rancher.sidekicks: consul-data
 
   vault:
     image: vault:0.8.1
@@ -115,14 +92,12 @@ services:
     command: vault server -config=/vault/config/vault.json
     volumes_from:
       - vault-config
-    links:
-      - nginx:consul
     labels:
       io.rancher.container.hostname_override: container_name
       io.rancher.sidekicks: vault-init, vault-config
 
   vault-config:
-    image: artifactory.devops.itaas-cloud.com:6553/vault-config:1.0.8355_51e0ff4d
+    image: artifactory.devops.itaas-cloud.com:6553/vault-config:1.0.8360_211991dd
     volumes:
       - /opt/vault
       - /vault/config
@@ -133,15 +108,13 @@ services:
       io.rancher.container.start_once: true
 
   vault-init:
-    image: artifactory.devops.itaas-cloud.com:6553/vault-init:1.0.8355_51e0ff4d
+    image: artifactory.devops.itaas-cloud.com:6553/vault-init:1.0.8360_211991dd
     environment:
       - rancher=1
     depends_on:
       - vault
     volumes_from:
       - vault-config
-    links:
-      - nginx:consul
     labels:
       io.rancher.container.hostname_override: container_name
       io.rancher.container.start_once: true
