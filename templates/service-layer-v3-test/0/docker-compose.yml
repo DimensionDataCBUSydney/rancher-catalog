@@ -1,7 +1,7 @@
 version: '2'
 services:
   nginx-config:
-    image: artifactory.devops.itaas-cloud.com:6553/nginx-config:1.0.8360_211991dd
+    image: artifactory.devops.itaas-cloud.com:6553/nginx-config:1.0.8365_7795a792
     environment:
       - configs=$consul_configs
     volumes:
@@ -10,7 +10,7 @@ services:
       io.rancher.container.hostname_override: container_name
       io.rancher.container.start_once: true
   nginx-ssl:
-    image: artifactory.devops.itaas-cloud.com:6553/nginx-ssl:1.0.8360_211991dd
+    image: artifactory.devops.itaas-cloud.com:6553/nginx-ssl:1.0.8365_7795a792
     environment:
       - cert=$cert_name
       - apiKey=$apiKey
@@ -31,7 +31,7 @@ services:
       - /var/log/nginx
 
   nginx:
-    image: artifactory.devops.itaas-cloud.com:6553/nginx-consultemplate:1.0.8360_211991dd
+    image: artifactory.devops.itaas-cloud.com:6553/nginx-consultemplate:1.0.8365_7795a792
     environment:
       - CONSUL_PORT_8500_TCP_ADDR=consul
       - LOG_LEVEL=debug
@@ -73,7 +73,7 @@ services:
       - /consul/data
 
   consul:
-    image: artifactory.devops.itaas-cloud.com:6553/consul-base:1.0.8360_211991dd
+    image: artifactory.devops.itaas-cloud.com:6553/consul-base:1.0.8365_7795a792
     environment:
       - SERVICE_IGNORE=true
       - rancher=1
@@ -97,7 +97,7 @@ services:
       io.rancher.sidekicks: vault-init, vault-config
 
   vault-config:
-    image: artifactory.devops.itaas-cloud.com:6553/vault-config:1.0.8360_211991dd
+    image: artifactory.devops.itaas-cloud.com:6553/vault-config:1.0.8365_7795a792
     volumes:
       - /opt/vault
       - /vault/config
@@ -108,7 +108,7 @@ services:
       io.rancher.container.start_once: true
 
   vault-init:
-    image: artifactory.devops.itaas-cloud.com:6553/vault-init:1.0.8360_211991dd
+    image: artifactory.devops.itaas-cloud.com:6553/vault-init:1.0.8365_7795a792
     environment:
       - rancher=1
     depends_on:
