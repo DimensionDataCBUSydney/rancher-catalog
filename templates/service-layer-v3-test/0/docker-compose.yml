@@ -1,7 +1,7 @@
 version: '2'
 services:
   nginx-config:
-    image: artifactory.devops.itaas-cloud.com:6553/nginx-config:1.0.8265_3b0cd360
+    image: artifactory.devops.itaas-cloud.com:6553/nginx-config:1.0.8354_3dd9316a
     environment:
       - configs=$consul_configs
     volumes:
@@ -10,7 +10,7 @@ services:
       io.rancher.container.hostname_override: container_name
       io.rancher.container.start_once: true
   nginx-ssl:
-    image: artifactory.devops.itaas-cloud.com:6553/nginx-ssl:1.0.8265_3b0cd360
+    image: artifactory.devops.itaas-cloud.com:6553/nginx-ssl:1.0.8354_3dd9316a
     environment:
       - cert=$cert_name
       - apiKey=$apiKey
@@ -29,9 +29,9 @@ services:
       io.rancher.container.start_once: true
     volumes:
       - /var/log/nginx
-  
+
   nginx:
-    image: artifactory.devops.itaas-cloud.com:6553/nginx-consultemplate:1.0.8265_3b0cd360
+    image: artifactory.devops.itaas-cloud.com:6553/nginx-consultemplate:1.0.8354_3dd9316a
     environment:
       - CONSUL_PORT_8500_TCP_ADDR=consul
       - LOG_LEVEL=debug
@@ -63,7 +63,7 @@ services:
     labels:
       io.rancher.container.hostname_override: container_name
       io.rancher.sidekicks: nginx-config,nginx-ssl,nginx-log
-  
+
   consul-data-1:
     image: alpine:latest
     entrypoint:
@@ -73,7 +73,7 @@ services:
       io.rancher.container.start_once: true
     volumes:
       - /consul/data
-  
+
   consul-data-2:
     image: alpine:latest
     entrypoint:
@@ -94,7 +94,7 @@ services:
     labels:
       io.rancher.container.hostname_override: container_name
       io.rancher.sidekicks: consul-data-1
-  
+
   consul-2:
     image: consul:0.7.3
     command: agent -server -join consul-1
@@ -107,29 +107,39 @@ services:
       io.rancher.sidekicks: consul-data-2
 
   vault:
-    image: artifactory.devops.itaas-cloud.com:6553/sl3-vault:1.0.8265_3b0cd360
+    image: vault:0.8.1
     cap_add:
       - IPC_LOCK
     environment:
       - VAULT_REDIRECT_INTERFACE=eth0
     command: vault server -config=/vault/config/vault.json
+    volumes_from:
+      - vault-config
     links:
       - nginx:consul
     labels:
       io.rancher.container.hostname_override: container_name
-      io.rancher.sidekicks: vault-init
+      io.rancher.sidekicks: vault-init, vault-config
+
+  vault-config:
+    image: artifactory.devops.itaas-cloud.com:6553/vault-config:1.0.8354_3dd9316a
+    volumes:
+      - /opt/vault
+      - /vault/config
+    entrypoint:
+      - /bin/true
+    labels:
+      io.rancher.container.hostname_override: container_name
+      io.rancher.container.start_once: true
 
   vault-init:
-    image: artifactory.devops.itaas-cloud.com:6553/sl3-vault-init:1.0.8265_3b0cd360
+    image: artifactory.devops.itaas-cloud.com:6553/vault-init:1.0.8354_3dd9316a
     depends_on:
       - vault
+    volumes_from:
+      - vault-config
     links:
       - nginx:consul
     labels:
       io.rancher.container.hostname_override: container_name
       io.rancher.container.start_once: true
-
-
-      
-  
-      
