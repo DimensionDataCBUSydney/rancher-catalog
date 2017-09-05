@@ -18,12 +18,7 @@
       label: "Artifactory API Key"
       type: "string"
       required: true
-    - variable: consul_bootstrap_expect
-      label: "consul number of servers to bootstrap"
-      required: true
-      type: "string"
-      default: "3"
-consul-1:
-  scale: 1
-consul-2:
-  scale: 2
+consul:
+  scale: 3
+vault:
+  scale: 3
