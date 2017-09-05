@@ -134,6 +134,8 @@ services:
 
   vault-init:
     image: artifactory.devops.itaas-cloud.com:6553/vault-init:1.0.8354_3dd9316a
+    environment:
+      - rancher=1
     depends_on:
       - vault
     volumes_from:
