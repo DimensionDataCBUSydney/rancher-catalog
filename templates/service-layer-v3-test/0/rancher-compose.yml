@@ -21,6 +21,7 @@
     - variable: erlang_cookie
       label: "ERLANG COOKIE FOR RABBITMQ"
       type: "string"
+      default: "erlangcookie"
       required: true
 consul:
   scale: 3
