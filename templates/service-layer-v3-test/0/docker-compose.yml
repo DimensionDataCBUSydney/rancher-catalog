@@ -125,6 +125,7 @@ services:
 
   rabbitmq-base:
     image: rabbitmq:3.6.11-management-alpine
+    network_mode: "container:rabbitmq"
     environment:
       - rancher=1
       - RABBITMQ_ERLANG_COOKIE=$erlang_cookie
@@ -138,6 +139,7 @@ services:
   rabbitmq-data:
     image: rabbitmq:3.6.11-management-alpine
     entrypoint: /bin/true
+    network_mode: "none"
     volumes:
       - /etc/rabbitmq
       - /opt/rancher/bin
