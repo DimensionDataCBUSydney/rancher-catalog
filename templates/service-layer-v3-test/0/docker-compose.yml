@@ -123,17 +123,18 @@ services:
       io.rancher.container.hostname_override: container_name
       io.rancher.container.start_once: true
 
-  rabbitmq:
+  rabbitmq-config:
     image: artifactory.devops.itaas-cloud.com:6553/rabbitmq-config:1.0.8411_75594fcd
+    network_mode: "container:rabbitmq"
     environment:
       - rancher=1
       - RABBITMQ_CLUSTER_PARTITION_HANDLING=autoheal
-      - RABBITMQ_NET_TICKTIME=180
+      - RABBITMQ_NET_TICKTIME=60
     volumes_from:
       - rabbitmq-data
     labels:
       io.rancher.container.hostname_override: container_name
-      io.rancher.sidekicks: rabbitmq-data, rabbitmq-base
+
 
 
   rabbitmq-data:
@@ -148,9 +149,8 @@ services:
       io.rancher.container.hostname_override: container_name
       io.rancher.container.start_once: true
 
-  rabbitmq-base:
+  rabbitmq:
     image: rabbitmq:3.6.11-management-alpine
-    network_mode: "container:rabbitmq"
     environment:
       - rancher=1
       - RABBITMQ_ERLANG_COOKIE=$erlang_cookie
@@ -160,3 +160,4 @@ services:
     restart: always
     labels:
       io.rancher.container.hostname_override: container_name
+      io.rancher.sidekicks: rabbitmq-data, rabbitmq-config
