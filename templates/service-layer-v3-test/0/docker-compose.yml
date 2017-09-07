@@ -125,7 +125,6 @@ services:
 
   rabbitmq-config:
     image: artifactory.devops.itaas-cloud.com:6553/rabbitmq-config:1.0.8411_75594fcd
-    network_mode: "container:rabbitmq"
     environment:
       - rancher=1
       - RABBITMQ_CLUSTER_PARTITION_HANDLING=autoheal
@@ -134,7 +133,6 @@ services:
       - rabbitmq-data
     labels:
       io.rancher.container.hostname_override: container_name
-
 
 
   rabbitmq-data:
@@ -151,6 +149,7 @@ services:
 
   rabbitmq:
     image: rabbitmq:3.6.11-management-alpine
+    network_mode: "container:rabbitmq-config"
     environment:
       - rancher=1
       - RABBITMQ_ERLANG_COOKIE=$erlang_cookie
