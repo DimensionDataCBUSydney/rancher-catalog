@@ -123,7 +123,7 @@ services:
       io.rancher.container.hostname_override: container_name
       io.rancher.container.start_once: true
 
-  rabbitmq:
+  rabbitmq-config:
     image: artifactory.devops.itaas-cloud.com:6553/rabbitmq-config:1.0.8398_4a040ed3
     environment:
       - rancher=1
@@ -133,22 +133,21 @@ services:
       - rabbitmq-data
     labels:
       io.rancher.container.hostname_override: container_name
-      io.rancher.sidekicks: rabbitmq-data, rabbitmq-base
-      io.rancher.scheduler.affinity:container_label_soft_ne: io.rancher.stack_service.name=$${stack_name}/$${service_name}
+      
 
   rabbitmq-data:
     image: rabbitmq:3.6.11-management-alpine
     entrypoint: /bin/true
     network_mode: "none"
     volumes:
-      - rabbitconf:/etc/rabbitmq
-      - rancherbin:/opt/rancher/bin
+      - /etc/rabbitmq
+      - /opt/rancher/bin
+      - /var/lib/rabbitmq
     labels:
       io.rancher.container.hostname_override: container_name
       io.rancher.container.start_once: true
-      io.rancher.scheduler.affinity:container_label_soft_ne: io.rancher.stack_service.name=$${stack_name}/$${service_name}
 
-  rabbitmq-base:
+  rabbitmq:
     image: rabbitmq:3.6.11-management-alpine
     network_mode: "container:rabbitmq"
     environment:
@@ -160,13 +159,4 @@ services:
     restart: always
     labels:
       io.rancher.container.hostname_override: container_name
-      io.rancher.scheduler.affinity:container_label_soft_ne: io.rancher.stack_service.name=$${stack_name}/$${service_name}
-  
-  
-volumes:
-  rancherbin:
-    driver: local
-    per_container: true
-  rabbitconf:
-    driver: local
-    per_container: true
+      io.rancher.sidekicks: rabbitmq-data, rabbitmq-config

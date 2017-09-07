@@ -25,7 +25,7 @@
 consul:
   scale: 3
 vault:
-  scale: 1
+  scale: 3
 nginx:
   scale: 1
 rabbitmq:
