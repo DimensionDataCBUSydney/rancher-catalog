@@ -124,7 +124,7 @@ services:
       io.rancher.container.start_once: true
 
   rabbitmq:
-    image: rabbitmq:3-management-alpine
+    image: rabbitmq:3.6.11-management-alpine
     environment:
       - rancher=1
       - RABBITMQ_ERLANG_COOKIE=$erlang_cookie
@@ -138,7 +138,7 @@ services:
       io.rancher.sidekicks: rabbitmq-data, rabbitmq-config
 
   rabbitmq-data:
-    image: alpine:latest
+    image: rabbitmq:3.6.11-management-alpine
     entrypoint: /bin/true
     volumes:
       - rabbitconf:/etc/rabbitmq
