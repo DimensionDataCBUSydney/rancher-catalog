@@ -123,31 +123,30 @@ services:
       io.rancher.container.hostname_override: container_name
       io.rancher.container.start_once: true
 
-  rabbitmq:
+  rabbitmq-base:
     image: rabbitmq:3.6.11-management-alpine
     environment:
       - rancher=1
       - RABBITMQ_ERLANG_COOKIE=$erlang_cookie
     entrypoint: /opt/rancher/bin/run.sh
-    depends_on:
-      - rabbitmq-config
     volumes_from:
       - rabbitmq-data
     labels:
       io.rancher.container.hostname_override: container_name
-      io.rancher.sidekicks: rabbitmq-data, rabbitmq-config
+      
 
   rabbitmq-data:
-    image: rabbitmq:3.6-management-alpine
+    image: rabbitmq:3.6.11-management-alpine
     entrypoint: /bin/true
     volumes:
-      - rabbitconf:/etc/rabbitmq
-      - rancherbin:/opt/rancher/bin
+      - /etc/rabbitmq
+      - /opt/rancher/bin
+      - /var/lib/rabbitmq
     labels:
       io.rancher.container.hostname_override: container_name
       io.rancher.container.start_once: true
 
-  rabbitmq-config:
+  rabbitmq:
     image: artifactory.devops.itaas-cloud.com:6553/rabbitmq-config:1.0.8398_4a040ed3
     environment:
       - rancher=1
@@ -157,10 +156,4 @@ services:
       - rabbitmq-data
     labels:
       io.rancher.container.hostname_override: container_name
-volumes:
-  rancherbin:
-    driver: local
-    per_container: true
-  rabbitconf:
-    driver: local
-    per_container: true
+      io.rancher.sidekicks: rabbitmq-data, rabbitmq-base
