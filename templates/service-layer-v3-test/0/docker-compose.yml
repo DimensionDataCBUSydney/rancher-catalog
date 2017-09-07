@@ -149,7 +149,6 @@ services:
 
   rabbitmq:
     image: rabbitmq:3.6.11-management-alpine
-    network_mode: "container:rabbitmq"
     environment:
       - rancher=1
       - RABBITMQ_ERLANG_COOKIE=$erlang_cookie
