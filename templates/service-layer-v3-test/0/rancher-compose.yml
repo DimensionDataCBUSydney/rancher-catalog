@@ -29,4 +29,4 @@ vault:
 nginx:
   scale: 1
 rabbitmq:
-  scale: 1
+  scale: 2

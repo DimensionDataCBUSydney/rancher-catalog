@@ -1,7 +1,7 @@
 version: '2'
 services:
   nginx-config:
-    image: artifactory.devops.itaas-cloud.com:6553/nginx-config:1.0.8398_4a040ed3
+    image: artifactory.devops.itaas-cloud.com:6553/nginx-config:1.0.8408_77b5c94b
     environment:
       - configs=$consul_configs
     volumes:
@@ -10,7 +10,7 @@ services:
       io.rancher.container.hostname_override: container_name
       io.rancher.container.start_once: true
   nginx-ssl:
-    image: artifactory.devops.itaas-cloud.com:6553/nginx-ssl:1.0.8398_4a040ed3
+    image: artifactory.devops.itaas-cloud.com:6553/nginx-ssl:1.0.8408_77b5c94b
     environment:
       - cert=$cert_name
       - apiKey=$apiKey
@@ -31,7 +31,7 @@ services:
       - /var/log/nginx
 
   nginx:
-    image: artifactory.devops.itaas-cloud.com:6553/nginx-consultemplate:1.0.8398_4a040ed3
+    image: artifactory.devops.itaas-cloud.com:6553/nginx-consultemplate:1.0.8408_77b5c94b
     environment:
       - CONSUL_PORT_8500_TCP_ADDR=consul
       - LOG_LEVEL=debug
@@ -75,7 +75,7 @@ services:
       - /consul/data
 
   consul:
-    image: artifactory.devops.itaas-cloud.com:6553/consul-base:1.0.8398_4a040ed3
+    image: artifactory.devops.itaas-cloud.com:6553/consul-base:1.0.8408_77b5c94b
     environment:
       - SERVICE_IGNORE=true
       - rancher=1
@@ -101,7 +101,7 @@ services:
       io.rancher.sidekicks: vault-init, vault-config
 
   vault-config:
-    image: artifactory.devops.itaas-cloud.com:6553/vault-config:1.0.8398_4a040ed3
+    image: artifactory.devops.itaas-cloud.com:6553/vault-config:1.0.8408_77b5c94b
     volumes:
       - /opt/vault
       - /vault/config
@@ -112,7 +112,7 @@ services:
       io.rancher.container.start_once: true
 
   vault-init:
-    image: artifactory.devops.itaas-cloud.com:6553/vault-init:1.0.8398_4a040ed3
+    image: artifactory.devops.itaas-cloud.com:6553/vault-init:1.0.8408_77b5c94b
     environment:
       - rancher=1
     depends_on:
@@ -124,7 +124,7 @@ services:
       io.rancher.container.start_once: true
 
   rabbitmq-config:
-    image: artifactory.devops.itaas-cloud.com:6553/rabbitmq-config:1.0.8398_4a040ed3
+    image: artifactory.devops.itaas-cloud.com:6553/rabbitmq-config:1.0.8408_77b5c94b
     environment:
       - rancher=1
       - RABBITMQ_CLUSTER_PARTITION_HANDLING=autoheal
@@ -133,7 +133,7 @@ services:
       - rabbitmq-data
     labels:
       io.rancher.container.hostname_override: container_name
-      
+
 
   rabbitmq-data:
     image: rabbitmq:3.6.11-management-alpine
