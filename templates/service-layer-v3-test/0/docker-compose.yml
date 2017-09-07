@@ -1,7 +1,7 @@
 version: '2'
 services:
   nginx-config:
-    image: artifactory.devops.itaas-cloud.com:6553/nginx-config:1.0.8366_679e5a18
+    image: artifactory.devops.itaas-cloud.com:6553/nginx-config:1.0.8392_4fd7b78f
     environment:
       - configs=$consul_configs
     volumes:
@@ -10,7 +10,7 @@ services:
       io.rancher.container.hostname_override: container_name
       io.rancher.container.start_once: true
   nginx-ssl:
-    image: artifactory.devops.itaas-cloud.com:6553/nginx-ssl:1.0.8366_679e5a18
+    image: artifactory.devops.itaas-cloud.com:6553/nginx-ssl:1.0.8392_4fd7b78f
     environment:
       - cert=$cert_name
       - apiKey=$apiKey
@@ -31,7 +31,7 @@ services:
       - /var/log/nginx
 
   nginx:
-    image: artifactory.devops.itaas-cloud.com:6553/nginx-consultemplate:1.0.8366_679e5a18
+    image: artifactory.devops.itaas-cloud.com:6553/nginx-consultemplate:1.0.8392_4fd7b78f
     environment:
       - CONSUL_PORT_8500_TCP_ADDR=consul
       - LOG_LEVEL=debug
@@ -43,6 +43,7 @@ services:
       - 80:80
       - 443:443
       - 5671:5671
+      - 8081:8081
       - 8080:8080
       - 8300:8300
       - 8301:8301
@@ -60,6 +61,7 @@ services:
       - nginx-log
     labels:
       io.rancher.container.hostname_override: container_name
+      io.rancher.scheduler.global: true
       io.rancher.sidekicks: nginx-config,nginx-ssl,nginx-log
 
   consul-data:
@@ -73,7 +75,7 @@ services:
       - /consul/data
 
   consul:
-    image: artifactory.devops.itaas-cloud.com:6553/consul-base:1.0.8366_679e5a18
+    image: artifactory.devops.itaas-cloud.com:6553/consul-base:1.0.8392_4fd7b78f
     environment:
       - SERVICE_IGNORE=true
       - rancher=1
@@ -97,7 +99,7 @@ services:
       io.rancher.sidekicks: vault-init, vault-config
 
   vault-config:
-    image: artifactory.devops.itaas-cloud.com:6553/vault-config:1.0.8366_679e5a18
+    image: artifactory.devops.itaas-cloud.com:6553/vault-config:1.0.8392_4fd7b78f
     volumes:
       - /opt/vault
       - /vault/config
@@ -108,13 +110,43 @@ services:
       io.rancher.container.start_once: true
 
   vault-init:
-    image: artifactory.devops.itaas-cloud.com:6553/vault-init:1.0.8366_679e5a18
+    image: artifactory.devops.itaas-cloud.com:6553/vault-init:1.0.8392_4fd7b78f
     environment:
       - rancher=1
     depends_on:
       - vault
     volumes_from:
       - vault-config
+    labels:
+      io.rancher.container.hostname_override: container_name
+
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    environment:
+      - rancher=1
+      - RABBITMQ_ERLANG_COOKIE=$erlang_cookie
+    entrypoint: /opt/rabbitmq-config/run.sh
+    volumes_from:
+      - rabbitmq-data
+      - rabbitmq-config
+    labels:
+      io.rancher.container.hostname_override: container_name
+      io.rancher.sidekicks: rabbitmq-data, rabbitmq-config
+
+  rabbitmq-data:
+    image: alpine:latest
+    entrypoint: /bin/true
+    volumes:
+      - /var/lib/rabbitmq
+    labels:
+      io.rancher.container.hostname_override: container_name
+      io.rancher.container.start_once: true
+
+  rabbitmq-config:
+    image: artifactory.devops.itaas-cloud.com:6553/rabbitmq-config:1.0.8392_4fd7b78f
+    entrypoint: /bin/true
+    volumes:
+      - /opt/rabbitmq-config
     labels:
       io.rancher.container.hostname_override: container_name
       io.rancher.container.start_once: true

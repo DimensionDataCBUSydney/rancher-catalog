@@ -18,7 +18,15 @@
       label: "Artifactory API Key"
       type: "string"
       required: true
+    - variable: erlang_cookie
+      label: "ERLANG COOKIE FOR RABBITMQ"
+      type: "string"
+      required: true
 consul:
   scale: 3
 vault:
+  scale: 3
+nginx:
+  scale: 3
+rabbitmq:
   scale: 3
