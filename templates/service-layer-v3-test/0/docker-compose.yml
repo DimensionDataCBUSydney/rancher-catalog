@@ -93,7 +93,7 @@ services:
       - VAULT_REDIRECT_INTERFACE=eth0
     command: vault server -config=/vault/config/vault.json
     depends_on:
-      consul
+      - consul
     volumes_from:
       - vault-config
     labels:
