@@ -132,6 +132,8 @@ services:
     entrypoint: /opt/rancher/bin/run.sh
     volumes_from:
       - rabbitmq-data
+    restart:
+      - always
     labels:
       io.rancher.container.hostname_override: container_name
       
@@ -141,9 +143,8 @@ services:
     entrypoint: /bin/true
     network_mode: "none"
     volumes:
-      - /etc/rabbitmq
-      - /opt/rancher/bin
-      - /var/lib/rabbitmq
+      - rabbitconf:/etc/rabbitmq
+      - rancherbin:/opt/rancher/bin
     labels:
       io.rancher.container.hostname_override: container_name
       io.rancher.container.start_once: true
@@ -159,3 +160,11 @@ services:
     labels:
       io.rancher.container.hostname_override: container_name
       io.rancher.sidekicks: rabbitmq-data, rabbitmq-base
+  
+volumes:
+  rancherbin:
+    driver: local
+    per_container: true
+  rabbitconf:
+    driver: local
+    per_container: true
