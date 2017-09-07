@@ -138,7 +138,7 @@ services:
       io.rancher.sidekicks: rabbitmq-data, rabbitmq-config
 
   rabbitmq-data:
-    image: rabbitmq:3.6.11-management-alpine
+    image: rabbitmq:3.6-management-alpine
     entrypoint: /bin/true
     volumes:
       - rabbitconf:/etc/rabbitmq
@@ -153,7 +153,7 @@ services:
       - rancher=1
       - RABBITMQ_CLUSTER_PARTITION_HANDLING=autoheal
       - RABBITMQ_NET_TICKTIME=60
-    volumes:
+    volumes_from:
       - rabbitmq-data
     labels:
       io.rancher.container.hostname_override: container_name
