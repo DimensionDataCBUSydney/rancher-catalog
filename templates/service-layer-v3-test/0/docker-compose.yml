@@ -142,7 +142,6 @@ services:
     volumes:
       - /etc/rabbitmq
       - /opt/rancher/bin
-      - /var/lib/rabbitmq
     labels:
       io.rancher.container.hostname_override: container_name
       io.rancher.container.start_once: true
