@@ -23,6 +23,16 @@
       type: "string"
       default: "erlangcookie"
       required: true
+    - variable: rabbitmq_user
+      label: "DEFAULT USER FOR RABBITMQ"
+      type: "string"
+      default: "rabadmin"
+      required: true
+    - variable: rabbitmq_pass
+      label: "DEFAULT PASS FOR RABBITMQ"
+      type: "string"
+      default: "guest"
+      required: true
 consul:
   scale: 3
 vault:
