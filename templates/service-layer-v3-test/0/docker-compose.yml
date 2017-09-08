@@ -153,7 +153,6 @@ services:
     environment:
       - rancher=1
       - RABBITMQ_ERLANG_COOKIE=$erlang_cookie
-      - RABBITMQ_HIPE_COMPILE=1
       - RABBITMQ_DEFAULT_USER=$rabbitmq_user
       - RABBITMQ_DEFAULT_PASS=$rabbitmq_pass
     entrypoint: /opt/rancher/bin/run.sh
