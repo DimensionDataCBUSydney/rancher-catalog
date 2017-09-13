@@ -84,24 +84,40 @@ services:
       io.rancher.container.hostname_override: container_name
       io.rancher.sidekicks: consul-data
 
-
   registrator:
-    image: artifactory.devops.itaas-cloud.com:6553/registrator-base:latest
-    depends_on:
-      - consul
-    environment:
-      - rancher=1
-    tty: true
-    restart: always
+    image: juliangamble/registrator
+    network_mode: host
     volumes:
-      - /var/run/docker.sock:/tmp/docker.sock
-    command: consul://consul:8500
+    - /var/run/docker.sock:/tmp/docker.sock
     links:
       - consul
-    stdin_open: true
+    command:
+    - -rancherExternalPorts
+    - -cleanup
+    - consul://consul:8500
     labels:
-      io.rancher.scheduler.global: true
-      io.rancher.container.hostname_override: container_name
+      io.rancher.container.dns: 'true'
+      com.btfin.devops.name: registrator
+      io.rancher.scheduler.global: 'true'
+      io.rancher.container.network: 'false'
+
+  # registrator:
+  #   image: artifactory.devops.itaas-cloud.com:6553/registrator-base:latest
+  #   depends_on:
+  #     - consul
+  #   environment:
+  #     - rancher=1
+  #   tty: true
+  #   restart: always
+  #   volumes:
+  #     - /var/run/docker.sock:/tmp/docker.sock
+  #   command: consul://consul:8500
+  #   links:
+  #     - consul
+  #   stdin_open: true
+  #   labels:
+  #     io.rancher.scheduler.global: true
+  #     io.rancher.container.hostname_override: container_name
 
   # registrator-consulkv:
   #   image: artifactory.devops.itaas-cloud.com:6553/registrator-base:latest
