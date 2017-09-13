@@ -85,23 +85,18 @@ services:
       io.rancher.container.hostname_override: container_name
       io.rancher.sidekicks: consul-data
 
-
   registrator:
-    image: juliangamble/registrator
+    image: fmeriot/rancher-registrator
     network_mode: host
+    restart: always
+    environment:
+      - LOCAL_CONSUL_AGENT=http://localhost:8081
     volumes:
-    - /var/run/docker.sock:/tmp/docker.sock
-    links:
-      - consul
-    command:
-    - -rancherExternalPorts
-    - -cleanup
-    - consul://consul:8500
+      - /var/run/docker.sock:/var/run/docker.sock
     labels:
-      io.rancher.container.dns: 'true'
-      com.btfin.devops.name: registrator
-      io.rancher.scheduler.global: 'true'
-      io.rancher.container.network: 'false'
+      io.rancher.scheduler.global: true
+      io.rancher.container.dns: true
+      io.rancher.container.network: false
       io.rancher.container.hostname_override: container_name
 
   # registrator:

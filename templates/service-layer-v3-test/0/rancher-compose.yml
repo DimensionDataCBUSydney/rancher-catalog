@@ -38,6 +38,8 @@
       type: "string"
       default: "RA1"
       required: true
+consul:
+  scale: 3
 vault:
   scale: 3
 nginx:
