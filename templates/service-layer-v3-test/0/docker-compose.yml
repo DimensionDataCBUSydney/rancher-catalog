@@ -86,21 +86,37 @@ services:
       io.rancher.sidekicks: consul-data
 
   registrator:
-    image: artifactory.devops.itaas-cloud.com:6553/rancher-registrator:latest
+    # image: artifactory.devops.itaas-cloud.com:6553/rancher-registrator:latest
+    # links:
+    #   - consul
+    # restart: always
+    # environment:
+    #   - rancher=1
+    # volumes:
+    #   - /var/run/docker.sock:/tmp/docker.sock
+    # command: -rancherExternalPorts -cleanup consul://consul:8500
+    # labels:
+    #   io.rancher.container.dns: 'true'
+    #   com.btfin.devops.name: registrator
+    #   io.rancher.scheduler.global: 'true'
+    #   io.rancher.container.network: 'false'
+    #   io.rancher.container.hostname_override: container_name
+    image: fmeriot/rancher-registrator
     links:
       - consul
     restart: always
     environment:
-      - rancher=1
+      - LOCAL_CONSUL_AGENT=http://consul:8500
+    network_mode: host
     volumes:
-      - /var/run/docker.sock:/tmp/docker.sock
-    command: -rancherExternalPorts -cleanup consul://consul:8500
+      - /var/run/docker.sock:/var/run/docker.sock
     labels:
-      io.rancher.container.dns: 'true'
-      com.btfin.devops.name: registrator
-      io.rancher.scheduler.global: 'true'
-      io.rancher.container.network: 'false'
+      io.rancher.container.network: false
+      io.rancher.container.dns: true
       io.rancher.container.hostname_override: container_name
+
+
+
 
   # registrator:
   #   image: artifactory.devops.itaas-cloud.com:6553/registrator-base:latest
