@@ -86,7 +86,7 @@ services:
       io.rancher.sidekicks: consul-data
 
   registrator:
-    image: rancher-registrator
+    image: fmeriot/rancher-registrator
     network_mode: host
     restart: always
     links:
