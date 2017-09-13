@@ -92,9 +92,9 @@ services:
     links:
       - consul
     volumes:
-    - /var/run/docker.sock:/tmp/docker.sock
-    command:
-    - consul://consul:8500
+      - /var/run/docker.sock:/tmp/docker.sock
+    environment:
+      - LOCAL_CONSUL_AGENT=http://consul:8500
     labels:
       io.rancher.scheduler.global: true
       io.rancher.container.network: false
