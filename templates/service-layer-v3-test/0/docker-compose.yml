@@ -86,16 +86,20 @@ services:
       io.rancher.sidekicks: consul-data
 
   registrator:
-    image: gliderlabs/registrator:master
+    image: rancher-registrator
     network_mode: host
     restart: always
+    links:
+      - consul
     volumes:
     - /var/run/docker.sock:/tmp/docker.sock
     command:
-    - -internal
-    - -useIpFromLabel=io.rancher.container.ip
-    - -cleanup
-    - consul://localhost:8081
+    - consul://consul:8500
+    labels:
+      io.rancher.scheduler.global: true
+      io.rancher.container.network: false
+      io.rancher.container.dns: true
+      io.rancher.container.hostname_override: container_name
 
   # registrator:
   #   image: artifactory.devops.itaas-cloud.com:6553/registrator-base:latest
