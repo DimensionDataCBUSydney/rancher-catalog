@@ -107,11 +107,11 @@ services:
     restart: always
     environment:
       - LOCAL_CONSUL_AGENT=http://consul:8500
-    # network_mode: "container:consul"
+    network_mode: "container:consul"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     labels:
-      io.rancher.container.network: true
+      io.rancher.container.network: false
       io.rancher.container.dns: true
       io.rancher.container.hostname_override: container_name
       io.rancher.scheduler.global: true
