@@ -111,7 +111,7 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     labels:
-      io.rancher.container.network: false
+      io.rancher.container.network: true
       io.rancher.container.dns: true
       io.rancher.container.hostname_override: container_name
       io.rancher.scheduler.global: true
