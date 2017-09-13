@@ -88,9 +88,11 @@ services:
   registrator:
     image: fmeriot/rancher-registrator
     network_mode: host
+    links:
+      - consul
     restart: always
     environment:
-      - LOCAL_CONSUL_AGENT=http://localhost:8081
+      - LOCAL_CONSUL_AGENT=http://consul:8500
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     labels:
