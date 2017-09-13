@@ -82,10 +82,13 @@ services:
       - consul-data
     labels:
       io.rancher.container.hostname_override: container_name
-      io.rancher.sidekicks: consul-data, registrator-consul, registrator-consulkv
+      io.rancher.sidekicks: consul-data
 
-  registrator-consul:
+
+  registrator:
     image: registrator-base
+    depends_on:
+      - consul
     environment:
       - rancher=1
     restart: always
@@ -95,9 +98,12 @@ services:
     labels:
       io.rancher.scheduler.global: true
       io.rancher.container.hostname_override: container_name
+      io.rancher.sidekicks: registrator-consulkv
 
   registrator-consulkv:
     image: registrator-base
+    depends_on:
+      - consul
     environment:
       - rancher=1
     restart: always
