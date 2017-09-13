@@ -1,7 +1,7 @@
 version: '2'
 services:
   nginx-config:
-    image: artifactory.devops.itaas-cloud.com:6553/nginx-config:1.0.8420_c6125369
+    image: artifactory.devops.itaas-cloud.com:6553/nginx-config:1.0.8625_5260b13f
     environment:
       - configs=$consul_configs
     volumes:
@@ -10,7 +10,7 @@ services:
       io.rancher.container.hostname_override: container_name
       io.rancher.container.start_once: true
   nginx-ssl:
-    image: artifactory.devops.itaas-cloud.com:6553/nginx-ssl:1.0.8420_c6125369
+    image: artifactory.devops.itaas-cloud.com:6553/nginx-ssl:1.0.8625_5260b13f
     environment:
       - cert=$cert_name
       - apiKey=$apiKey
@@ -31,7 +31,7 @@ services:
       - /var/log/nginx
 
   nginx:
-    image: artifactory.devops.itaas-cloud.com:6553/nginx-consultemplate:1.0.8420_c6125369
+    image: artifactory.devops.itaas-cloud.com:6553/nginx-consultemplate:1.0.8625_5260b13f
     environment:
       - CONSUL_PORT_8500_TCP_ADDR=consul
       - LOG_LEVEL=debug
@@ -43,7 +43,6 @@ services:
       - 80:80
       - 443:443
       - 5671:5671
-      - 8081:8081
       - 8080:8080
       - 8300:8300
       - 8301:8301
@@ -75,7 +74,7 @@ services:
       - /consul/data
 
   consul:
-    image: artifactory.devops.itaas-cloud.com:6553/consul-base:1.0.8420_c6125369
+    image: artifactory.devops.itaas-cloud.com:6553/consul-base:1.0.8625_5260b13f
     environment:
       - SERVICE_IGNORE=true
       - rancher=1
@@ -83,7 +82,31 @@ services:
       - consul-data
     labels:
       io.rancher.container.hostname_override: container_name
-      io.rancher.sidekicks: consul-data
+      io.rancher.sidekicks: consul-data, registrator-consul, registrator-consulkv
+
+  registrator-consul:
+    image: registrator-base
+    environment:
+      - rancher=1
+    restart: always
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock
+    command: consul://consul:8500
+    labels:
+      io.rancher.scheduler.global: true
+      io.rancher.container.hostname_override: container_name
+
+  registrator-consulkv:
+    image: registrator-base
+    environment:
+      - rancher=1
+    restart: always
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock
+    command: consulkv://consul:8500/v1/kv/service
+    labels:
+      io.rancher.scheduler.global: true
+      io.rancher.container.hostname_override: container_name
 
   vault:
     image: vault:0.8.1
@@ -91,9 +114,14 @@ services:
       - IPC_LOCK
     environment:
       - VAULT_REDIRECT_INTERFACE=eth0
+      - SERVICE_8200_CHECK_HTTP=/v1/sys/seal-status
+      - SERVICE_8200_CHECK_INTERVAL=30s
+      - SERVICE_8200_CHECK_TIMEOUT=2s
     command: vault server -config=/vault/config/vault.json
     depends_on:
       - consul
+    ports:
+      - 8200
     volumes_from:
       - vault-config
     labels:
@@ -101,7 +129,7 @@ services:
       io.rancher.sidekicks: vault-init, vault-config
 
   vault-config:
-    image: artifactory.devops.itaas-cloud.com:6553/vault-config:1.0.8420_c6125369
+    image: artifactory.devops.itaas-cloud.com:6553/vault-config:1.0.8625_5260b13f
     volumes:
       - /opt/vault
       - /vault/config
@@ -112,11 +140,12 @@ services:
       io.rancher.container.start_once: true
 
   vault-init:
-    image: artifactory.devops.itaas-cloud.com:6553/vault-init:1.0.8420_c6125369
+    image: artifactory.devops.itaas-cloud.com:6553/vault-init:1.0.8625_5260b13f
     environment:
       - rancher=1
     depends_on:
       - vault
+      - LOCATION_KEY=$location_key
     volumes_from:
       - vault-config
     labels:
@@ -124,7 +153,7 @@ services:
       io.rancher.container.start_once: true
 
   rabbitmq-config:
-    image: artifactory.devops.itaas-cloud.com:6553/rabbitmq-config:1.0.8420_c6125369
+    image: artifactory.devops.itaas-cloud.com:6553/rabbitmq-config:1.0.8625_5260b13f
     environment:
       - rancher=1
       - RABBITMQ_CLUSTER_PARTITION_HANDLING=autoheal
@@ -155,7 +184,12 @@ services:
       - RABBITMQ_ERLANG_COOKIE=$erlang_cookie
       - RABBITMQ_DEFAULT_USER=$rabbitmq_user
       - RABBITMQ_DEFAULT_PASS=$rabbitmq_pass
+      - SERVICE_NAME=rabbitmq-local
+      - LOCATION_KEY=$location_key
+      - GLOBAL=true
     entrypoint: /opt/rancher/bin/run.sh
+    ports:
+      - 5672
     volumes_from:
       - rabbitmq-data
     restart: always

@@ -33,8 +33,11 @@
       type: "string"
       default: "guest"
       required: true
-consul:
-  scale: 3
+    - variable: location_key
+      label: "REGION LOCATION KEY"
+      type: "string"
+      default: "RA1"
+      required: true
 vault:
   scale: 3
 nginx:
