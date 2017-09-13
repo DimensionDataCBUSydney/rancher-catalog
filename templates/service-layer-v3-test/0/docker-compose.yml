@@ -98,7 +98,6 @@ services:
     labels:
       io.rancher.scheduler.global: true
       io.rancher.container.hostname_override: container_name
-      io.rancher.sidekicks: registrator-consulkv
 
   # registrator-consulkv:
   #   image: artifactory.devops.itaas-cloud.com:6553/registrator-base:1.0.8625_5260b13f
