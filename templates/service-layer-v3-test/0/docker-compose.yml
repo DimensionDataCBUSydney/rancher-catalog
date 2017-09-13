@@ -44,6 +44,7 @@ services:
       - 443:443
       - 5671:5671
       - 8080:8080
+      - 8081:8081
       - 8300:8300
       - 8301:8301
       - 8301:8301/udp
@@ -60,7 +61,7 @@ services:
       - nginx-log
     labels:
       io.rancher.container.hostname_override: container_name
-      # io.rancher.scheduler.global: true
+      io.rancher.scheduler.global: true
       io.rancher.sidekicks: nginx-config,nginx-ssl,nginx-log
 
   consul-data:
@@ -85,21 +86,16 @@ services:
       io.rancher.sidekicks: consul-data
 
   registrator:
-    image: juliangamble/registrator
-    network_mode: host
+    image: gliderlabs/registrator:master
+    net: host
+    restart: always
     volumes:
     - /var/run/docker.sock:/tmp/docker.sock
-    links:
-      - consul
     command:
-    - -rancherExternalPorts
+    - -internal
+    - -useIpFromLabel=io.rancher.container.ip
     - -cleanup
-    - consul://consul:8500
-    labels:
-      io.rancher.container.dns: 'true'
-      com.btfin.devops.name: registrator
-      io.rancher.scheduler.global: 'true'
-      io.rancher.container.network: 'false'
+    - consul://localhost:8081
 
   # registrator:
   #   image: artifactory.devops.itaas-cloud.com:6553/registrator-base:latest
