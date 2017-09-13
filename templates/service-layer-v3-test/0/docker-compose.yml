@@ -143,9 +143,9 @@ services:
     image: artifactory.devops.itaas-cloud.com:6553/vault-init:1.0.8625_5260b13f
     environment:
       - rancher=1
+      - LOCATION_KEY=$location_key
     depends_on:
       - vault
-      - LOCATION_KEY=$location_key
     volumes_from:
       - vault-config
     labels:
