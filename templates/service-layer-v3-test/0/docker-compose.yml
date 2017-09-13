@@ -107,7 +107,7 @@ services:
     restart: always
     environment:
       - LOCAL_CONSUL_AGENT=http://consul:8500
-    network_mode: host
+    # network_mode: "container:consul"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     labels:
