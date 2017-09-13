@@ -87,7 +87,7 @@ services:
 
   registrator:
     image: gliderlabs/registrator:master
-    net: host
+    network_mode: host
     restart: always
     volumes:
     - /var/run/docker.sock:/tmp/docker.sock
