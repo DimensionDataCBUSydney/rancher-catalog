@@ -86,7 +86,7 @@ services:
 
 
   registrator:
-    image: registrator-base
+    image: artifactory.devops.itaas-cloud.com:6553/registrator-base:1.0.8625_5260b13f
     depends_on:
       - consul
     environment:
@@ -100,19 +100,18 @@ services:
       io.rancher.container.hostname_override: container_name
       io.rancher.sidekicks: registrator-consulkv
 
-  registrator-consulkv:
-    image: registrator-base
-    depends_on:
-      - consul
-    environment:
-      - rancher=1
-    restart: always
-    volumes:
-      - /var/run/docker.sock:/tmp/docker.sock
-    command: consulkv://consul:8500/v1/kv/service
-    labels:
-      io.rancher.scheduler.global: true
-      io.rancher.container.hostname_override: container_name
+  # registrator-consulkv:
+  #   image: artifactory.devops.itaas-cloud.com:6553/registrator-base:1.0.8625_5260b13f
+  #   depends_on:
+  #     - consul
+  #   environment:
+  #     - rancher=1
+  #   restart: always
+  #   volumes:
+  #     - /var/run/docker.sock:/tmp/docker.sock
+  #   command: consulkv://consul:8500/v1/kv/service
+  #   labels:
+  #     io.rancher.container.hostname_override: container_name
 
   vault:
     image: vault:0.8.1
