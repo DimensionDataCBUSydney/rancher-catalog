@@ -90,7 +90,6 @@ services:
     links:
       - consul
     restart: always
-    network_mode: host
     environment:
       - rancher=1
     volumes:
