@@ -83,7 +83,7 @@ services:
       - consul-data
     labels:
       io.rancher.container.hostname_override: container_name
-      io.rancher.sidekicks: consul-data
+      io.rancher.sidekicks: consul-data, registrator
 
   registrator:
     # image: artifactory.devops.itaas-cloud.com:6553/rancher-registrator:latest
