@@ -85,80 +85,13 @@ services:
       io.rancher.container.hostname_override: container_name
       io.rancher.sidekicks: consul-data, registrator
 
-  registrator:
-    # image: artifactory.devops.itaas-cloud.com:6553/rancher-registrator:latest
-    # links:
-    #   - consul
-    # restart: always
-    # environment:
-    #   - rancher=1
-    # volumes:
-    #   - /var/run/docker.sock:/tmp/docker.sock
-    # command: -rancherExternalPorts -cleanup consul://consul:8500
-    # labels:
-    #   io.rancher.container.dns: 'true'
-    #   com.btfin.devops.name: registrator
-    #   io.rancher.scheduler.global: 'true'
-    #   io.rancher.container.network: 'false'
-    #   io.rancher.container.hostname_override: container_name
-    image: fmeriot/rancher-registrator
-    links:
-      - consul
-    restart: always
-    environment:
-      - LOCAL_CONSUL_AGENT=http://consul:8500
-    network_mode: "container:consul"
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-    labels:
-      io.rancher.container.network: true
-      io.rancher.container.dns: true
-      io.rancher.container.hostname_override: container_name
-      io.rancher.scheduler.global: true
-
-
-
-  # registrator:
-  #   image: artifactory.devops.itaas-cloud.com:6553/registrator-base:latest
-  #   depends_on:
-  #     - consul
-  #   environment:
-  #     - rancher=1
-  #   tty: true
-  #   restart: always
-  #   volumes:
-  #     - /var/run/docker.sock:/tmp/docker.sock
-  #   command: consul://consul:8500
-  #   links:
-  #     - consul
-  #   stdin_open: true
-  #   labels:
-  #     io.rancher.scheduler.global: true
-  #     io.rancher.container.hostname_override: container_name
-
-  # registrator-consulkv:
-  #   image: artifactory.devops.itaas-cloud.com:6553/registrator-base:latest
-  #   depends_on:
-  #     - consul
-  #   environment:
-  #     - rancher=1
-  #   restart: always
-  #   volumes:
-  #     - /var/run/docker.sock:/tmp/docker.sock
-  #   command: consulkv://consul:8500/v1/kv/service
-  #   labels:
-  #     io.rancher.container.hostname_override: container_name
-
   vault:
     image: vault:0.8.1
     cap_add:
       - IPC_LOCK
     environment:
       - VAULT_REDIRECT_INTERFACE=eth0
-      - SERVICE_8200_CHECK_HTTP=/v1/sys/seal-status
-      - SERVICE_8200_CHECK_INTERVAL=30s
-      - SERVICE_8200_CHECK_TIMEOUT=2s
-    command: vault server -config=/vault/config/vault.json
+    entrypoint: /opt/rancher/bin/run.sh vault server -config=/vault/config/vault.json
     depends_on:
       - consul
     ports:
@@ -174,6 +107,7 @@ services:
     volumes:
       - /opt/vault
       - /vault/config
+      - /opt/rancher/bin
     entrypoint:
       - /bin/true
     labels:
