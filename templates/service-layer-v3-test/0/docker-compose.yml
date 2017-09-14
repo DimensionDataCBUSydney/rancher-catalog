@@ -109,7 +109,6 @@ services:
     volumes:
       - /opt/vault
       - /vault/config
-      - /opt/rancher/bin
     entrypoint:
       - /bin/true
     labels:
