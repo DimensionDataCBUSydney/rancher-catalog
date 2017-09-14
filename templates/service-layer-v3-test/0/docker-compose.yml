@@ -19,6 +19,7 @@ services:
     labels:
       io.rancher.container.hostname_override: container_name
       io.rancher.container.start_once: true
+      io.rancher.container.pull_image: always
 
   nginx-log:
     image: alpine:latest
@@ -27,6 +28,7 @@ services:
     labels:
       io.rancher.container.hostname_override: container_name
       io.rancher.container.start_once: true
+      io.rancher.container.pull_image: always
     volumes:
       - /var/log/nginx
 
@@ -63,6 +65,7 @@ services:
       io.rancher.container.hostname_override: container_name
       io.rancher.scheduler.global: true
       io.rancher.sidekicks: nginx-config,nginx-ssl,nginx-log
+      io.rancher.container.pull_image: always
 
   consul-data:
     image: alpine:latest
@@ -71,6 +74,7 @@ services:
     labels:
       io.rancher.container.hostname_override: container_name
       io.rancher.container.start_once: true
+      io.rancher.container.pull_image: always
     volumes:
       - /consul/data
 
@@ -84,6 +88,7 @@ services:
     labels:
       io.rancher.container.hostname_override: container_name
       io.rancher.sidekicks: consul-data
+      io.rancher.container.pull_image: always
 
   vault:
     image: vault:0.8.1
@@ -103,6 +108,7 @@ services:
     labels:
       io.rancher.container.hostname_override: container_name
       io.rancher.sidekicks: vault-init, vault-config
+      io.rancher.container.pull_image: always
 
   vault-config:
     image: artifactory.devops.itaas-cloud.com:6553/vault-config:latest
@@ -115,6 +121,7 @@ services:
     labels:
       io.rancher.container.hostname_override: container_name
       io.rancher.container.start_once: true
+      io.rancher.container.pull_image: always
 
   vault-init:
     image: artifactory.devops.itaas-cloud.com:6553/vault-init:latest
@@ -128,6 +135,7 @@ services:
     labels:
       io.rancher.container.hostname_override: container_name
       io.rancher.container.start_once: true
+      io.rancher.container.pull_image: always
 
   rabbitmq-config:
     image: artifactory.devops.itaas-cloud.com:6553/rabbitmq-config:latest
@@ -141,6 +149,7 @@ services:
       - rabbitmq-data
     labels:
       io.rancher.container.hostname_override: container_name
+      io.rancher.container.pull_image: always
 
 
   rabbitmq-data:
@@ -153,6 +162,7 @@ services:
     labels:
       io.rancher.container.hostname_override: container_name
       io.rancher.container.start_once: true
+      io.rancher.container.pull_image: always
 
   rabbitmq:
     image: rabbitmq:3.6.11-management-alpine
@@ -173,3 +183,4 @@ services:
     labels:
       io.rancher.container.hostname_override: container_name
       io.rancher.sidekicks: rabbitmq-data, rabbitmq-config
+      io.rancher.container.pull_image: always
