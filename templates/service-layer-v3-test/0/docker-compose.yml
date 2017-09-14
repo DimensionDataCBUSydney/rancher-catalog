@@ -92,9 +92,10 @@ services:
     environment:
       - rancher=1
       - VAULT_REDIRECT_INTERFACE=eth0
-    entrypoint: /opt/rancher/bin/run.sh vault server -config=/vault/config/vault.json
+    entrypoint: /opt/vault/run.sh vault server -config=/vault/config/vault.json
     depends_on:
       - consul
+      - vault-config
     ports:
       - 8200
     volumes_from:
