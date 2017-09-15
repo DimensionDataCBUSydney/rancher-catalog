@@ -39,10 +39,10 @@
       default: "RA1"
       required: true
 consul:
-  scale: 3
+  scale: 1
 vault:
-  scale: 3
+  scale: 1
 nginx:
   scale: 1
 rabbitmq:
-  scale: 2
+  scale: 1
