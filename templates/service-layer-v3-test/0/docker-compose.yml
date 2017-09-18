@@ -73,7 +73,6 @@ services:
     image: artifactory.devops.itaas-cloud.com:6553/consul-base:latest
     environment:
       - SERVICE_IGNORE=true
-      - CONSUL_LOCAL_CONFIG={"leave_on_terminate": true}
       - rancher=1
     volumes_from:
       - consul-data
