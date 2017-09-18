@@ -47,16 +47,7 @@ services:
       - 5671:5671
       - 8080:8080
       - 8081:8081
-      - 8300:8300
-      - 8301:8301
-      - 8301:8301/udp
-      - 8302:8302
-      - 8302:8302/udp
-      - 8500:8500
-      - 8600:8600
-      - 8600:8600/udp
-      - 8200:8200
-      - 8201:8201
+
     volumes_from:
       - nginx-config
       - nginx-ssl
@@ -82,12 +73,25 @@ services:
     image: artifactory.devops.itaas-cloud.com:6553/consul-base:latest
     environment:
       - SERVICE_IGNORE=true
+      - CONSUL_LOCAL_CONFIG={"leave_on_terminate": true}
       - rancher=1
     volumes_from:
       - consul-data
+    ports:
+      - 8300:8300
+      - 8301:8301
+      - 8301:8301/udp
+      - 8302:8302
+      - 8302:8302/udp
+      - 8500:8500
+      - 8600:8600
+      - 8600:8600/udp
+      - 8200:8200
+      - 8201:8201
     labels:
       io.rancher.container.hostname_override: container_name
       io.rancher.sidekicks: consul-data
+      io.rancher.scheduler.global: true
       io.rancher.container.pull_image: always
 
   vault:
