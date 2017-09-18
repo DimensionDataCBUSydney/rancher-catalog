@@ -38,8 +38,12 @@
       type: "string"
       default: "RA1"
       required: true
-consul:
-  scale: 1
+    - variable: vault_address
+      label: "VAULT PUBLIC ADDRESS"
+      type: "string"
+      default: "mci.ci.dimensiondata.cloud"
+      required: true
+
 vault:
   scale: 1
 nginx:

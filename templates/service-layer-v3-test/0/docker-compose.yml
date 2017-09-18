@@ -47,6 +47,8 @@ services:
       - 5671:5671
       - 8080:8080
       - 8081:8081
+      - 8200:8200
+      - 8201:8201
 
     volumes_from:
       - nginx-config
@@ -85,8 +87,7 @@ services:
       - 8500:8500
       - 8600:8600
       - 8600:8600/udp
-      - 8200:8200
-      - 8201:8201
+
     labels:
       io.rancher.container.hostname_override: container_name
       io.rancher.sidekicks: consul-data
@@ -100,6 +101,7 @@ services:
     environment:
       - rancher=1
       - VAULT_REDIRECT_INTERFACE=eth0
+      - VAULT_PUBLIC_ADDR=$vaultaddress
     entrypoint: /opt/vault/run.sh vault server -config=/vault/config/vault.json
     depends_on:
       - consul
