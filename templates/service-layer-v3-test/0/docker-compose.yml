@@ -2,8 +2,6 @@ version: '2'
 services:
   nginx-config:
     image: artifactory.devops.itaas-cloud.com:6553/nginx-config:latest
-    environment:
-      - API_PUBLIC_ADDR=$publicaddress
     volumes:
       - /etc/nginx/config
     labels:
@@ -35,6 +33,7 @@ services:
   nginx:
     image: artifactory.devops.itaas-cloud.com:6553/nginx-consultemplate:latest
     environment:
+      - API_PUBLIC_ADDR=$public_hostname
       - CONSUL_PORT_8500_TCP_ADDR=consul
       - LOG_LEVEL=debug
       - CONSUL_KV_PREFIX=nginx
@@ -100,7 +99,7 @@ services:
     environment:
       - rancher=1
       - VAULT_REDIRECT_INTERFACE=eth0
-      - VAULT_PUBLIC_ADDR=$publicaddress
+      - VAULT_PUBLIC_ADDR=$public_hostname
     entrypoint: /opt/vault/run.sh vault server -config=/vault/config/vault.json
     depends_on:
       - consul
