@@ -3,7 +3,7 @@ services:
   nginx-config:
     image: artifactory.devops.itaas-cloud.com:6553/nginx-config:latest
     environment:
-      - configs=$consul_configs
+      - API_PUBLIC_ADDR=$publicaddress
     volumes:
       - /etc/nginx/config
     labels:
@@ -100,7 +100,7 @@ services:
     environment:
       - rancher=1
       - VAULT_REDIRECT_INTERFACE=eth0
-      - VAULT_PUBLIC_ADDR=$vaultaddress
+      - VAULT_PUBLIC_ADDR=$publicaddress
     entrypoint: /opt/vault/run.sh vault server -config=/vault/config/vault.json
     depends_on:
       - consul

@@ -4,11 +4,6 @@
   version: "0.1"
   uuid: servicelayer3-1
   questions:
-    - variable: consul_configs
-      label: "consul initial configs"
-      type: "string"
-      required: true
-      default: "sl3_api.hostname=mci.ci.dimensiondata.cloud"
     - variable: cert_name
       label: "public cert name in the artifactory"
       type: "string"
@@ -38,8 +33,8 @@
       type: "string"
       default: "RA1"
       required: true
-    - variable: vault_address
-      label: "VAULT PUBLIC ADDRESS"
+    - variable: public_hostname
+      label: "PUBLIC HOSTNAME"
       type: "string"
       default: "mci.ci.dimensiondata.cloud"
       required: true
