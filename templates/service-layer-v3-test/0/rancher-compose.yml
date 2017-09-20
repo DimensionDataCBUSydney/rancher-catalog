@@ -33,8 +33,13 @@
       type: "string"
       default: "RA1"
       required: true
-    - variable: public_hostname
-      label: "PUBLIC HOSTNAME"
+    - variable: api_hostname
+      label: "API HOSTNAME"
+      type: "string"
+      default: "mci-api.ci.dimensiondata.cloud"
+      required: true
+    - variable: ui_hostname
+      label: "UI HOSTNAME"
       type: "string"
       default: "mci.ci.dimensiondata.cloud"
       required: true
