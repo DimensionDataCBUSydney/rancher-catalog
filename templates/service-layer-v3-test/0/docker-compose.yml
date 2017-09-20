@@ -33,9 +33,9 @@ services:
   nginx:
     image: artifactory.devops.itaas-cloud.com:6553/nginx-consultemplate:latest
     environment:
-      - API_PUBLIC_ADDR=$api_hostname
-      - UI_PUBLIC_ADDR=$ui_hostname
+      - DOMAIN=$domain
       - LOCATION_KEY=$location_key
+      - ENVIRONMENT_KEY=$environment_key
       - CONSUL_PORT_8500_TCP_ADDR=consul
       - LOG_LEVEL=debug
       - CONSUL_KV_PREFIX=nginx
@@ -101,7 +101,7 @@ services:
     environment:
       - rancher=1
       - VAULT_REDIRECT_INTERFACE=eth0
-      - VAULT_PUBLIC_ADDR=$ui_hostname
+      - VAULT_PUBLIC_ADDR=$environment_key.$domain
     entrypoint: /opt/vault/run.sh vault server -config=/vault/config/vault.json
     depends_on:
       - consul

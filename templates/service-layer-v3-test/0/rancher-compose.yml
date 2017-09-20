@@ -33,15 +33,15 @@
       type: "string"
       default: "RA1"
       required: true
-    - variable: api_hostname
-      label: "API HOSTNAME"
+    - variable: domain
+      label: "Public Domain"
       type: "string"
-      default: "mci-api.ci.dimensiondata.cloud"
+      default: "ci.dimensiondata.cloud"
       required: true
-    - variable: ui_hostname
-      label: "UI HOSTNAME"
+    - variable: environment_key
+      label: "Environment Key"
       type: "string"
-      default: "mci.ci.dimensiondata.cloud"
+      default: "mci"
       required: true
 
 vault:
