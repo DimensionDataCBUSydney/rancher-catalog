@@ -30,7 +30,6 @@ services:
     environment:
       - rancher=1
       - SERVICE_TAGS=http-proxy
-      - SERVICE_8500_IGNORE=false
       - SERVICE_8500_NAME=consulapi
       - SERVICE_8500_TAGS=http-proxy
       - SERVICE_8500_ID=consulapi
