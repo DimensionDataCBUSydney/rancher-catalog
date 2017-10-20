@@ -8,4 +8,9 @@
       label: "Consul Service"
       type: "service"
       required: true
-
+    - variable: "location_keys"
+      description: "region location keys"
+      label: "location keys of different regions"
+      type: "string"
+      required: true
+      default: "l01,l02"
