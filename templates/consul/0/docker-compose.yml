@@ -14,7 +14,7 @@ services:
   registrator:
     image: gliderlabs/registrator:latest
     volumes:
-      /var/run/docker.sock:/tmp/docker.sock
+     - /var/run/docker.sock:/tmp/docker.sock
     entrypoint:
      - consul://consul:8500
 
@@ -23,6 +23,10 @@ services:
     environment:
       - rancher=1
       - SERVICE_TAGS=http-proxy
+      - SERVICE_8300_IGNORE=true
+      - SERVICE_8301_IGNORE=true
+      - SERVICE_8302_IGNORE=true
+      - SERVICE_8600_IGNORE=true
     volumes_from:
       - consul-data
     expose:
