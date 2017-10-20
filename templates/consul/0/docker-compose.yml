@@ -16,7 +16,7 @@ services:
     volumes:
      - /var/run/docker.sock:/tmp/docker.sock
     command:
-     - -internal=true
+     - -internal=false
      - consul://consul:8500
     labels:
       io.rancher.container.hostname_override: container_name
