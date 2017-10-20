@@ -15,7 +15,7 @@ services:
     image: gliderlabs/registrator:latest
     volumes:
      - /var/run/docker.sock:/tmp/docker.sock
-    entrypoint:
+    command:
      - consul://consul:8500
 
   consul:
