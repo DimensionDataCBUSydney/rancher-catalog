@@ -31,7 +31,7 @@ services:
     expose:
       - 80
       - 5672
-    links:
+    external_links:
      - $consul_service:consul
     labels:
       io.rancher.container.hostname_override: container_name

@@ -1,10 +1,10 @@
 .catalog:
   name: "dd-nginx-consultemplate"
-  description: "NGINX Consul Template"
+  description: "nginx proxy configuration with Consul Template"
   version: "0.1"
-  uuid: nginx-consultemplate-1
   questions:
-    - variable: consul_service
-      label: "Consul Service to Use"
+    - variable: "consul_service"
+      description: "Link to consul service"
+      label: "Consul Service"
       type: "service"
       required: true
