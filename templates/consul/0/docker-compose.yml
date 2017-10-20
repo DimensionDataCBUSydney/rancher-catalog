@@ -10,11 +10,19 @@ services:
       io.rancher.container.pull_image: always
     volumes:
       - /consul/data
+  
+  registrator:
+    image: gliderlabs/registrator:latest
+    volumes:
+      /var/run/docker.sock:/tmp/docker.sock
+    entrypoint:
+     - consul://consul:8500
 
   consul:
     image: artifactory.devops.itaas-cloud.com:6553/consul-base:latest
     environment:
       - rancher=1
+      - SERVICE_TAGS=http-proxy
     volumes_from:
       - consul-data
     expose:
