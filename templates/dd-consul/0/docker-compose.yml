@@ -1,0 +1,34 @@
+version: '2'
+services:
+  consul-data:
+    image: alpine:latest
+    entrypoint:
+      - /bin/true
+    labels:
+      io.rancher.container.hostname_override: container_name
+      io.rancher.container.start_once: true
+      io.rancher.container.pull_image: always
+    volumes:
+      - /consul/data
+
+  consul:
+    image: artifactory.devops.itaas-cloud.com:6553/consul-base:latest
+    environment:
+      - rancher=1
+    volumes_from:
+      - consul-data
+    expose:
+      - 8300
+      - 8301
+      - 8301/udp
+      - 8302
+      - 8302/udp
+      - 8500
+      - 8600
+      - 8600/udp
+    labels:
+      io.rancher.container.hostname_override: container_name
+      io.rancher.sidekicks: consul-data
+      io.rancher.container.pull_image: always
+
+  

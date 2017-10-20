@@ -1,0 +1,7 @@
+name: "dd-consul"
+description:  consul catalog
+version: 0.1
+category: service layer
+maintainer: Kumar Chockalingam
+license: # The license
+projectURL: # A URL related to the catalog entry

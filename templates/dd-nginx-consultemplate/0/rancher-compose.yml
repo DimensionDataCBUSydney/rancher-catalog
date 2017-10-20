@@ -1,0 +1,10 @@
+.catalog:
+  name: "dd-nginx-consultemplate"
+  description: "NGINX Consul Template"
+  version: "0.1"
+  uuid: nginx-consultemplate-1
+  questions:
+    - variable: consul_service
+      label: "Consul Service to Use"
+      type: "service"
+      required: true
