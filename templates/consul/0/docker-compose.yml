@@ -13,8 +13,11 @@ services:
   
   registrator:
     image: gliderlabs/registrator:latest
+    network_mode: "host"
     volumes:
      - /var/run/docker.sock:/tmp/docker.sock
+    external_links:
+     - consul:consul
     command:
      - -internal=false
      - consul://consul:8500
