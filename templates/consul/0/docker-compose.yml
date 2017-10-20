@@ -19,7 +19,7 @@ services:
     external_links:
      - consul:consul
     command:
-     - -internal=false
+     - -internal=true
      - consul://consul:8500
     labels:
       io.rancher.container.hostname_override: container_name
