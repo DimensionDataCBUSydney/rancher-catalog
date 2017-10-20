@@ -17,6 +17,10 @@ services:
      - /var/run/docker.sock:/tmp/docker.sock
     command:
      - consul://consul:8500
+    labels:
+      io.rancher.container.hostname_override: container_name
+      io.rancher.container.global: true
+      io.rancher.container.pull_image: always
 
   consul:
     image: artifactory.devops.itaas-cloud.com:6553/consul-base:latest
@@ -44,7 +48,7 @@ services:
       - 8600/udp
     labels:
       io.rancher.container.hostname_override: container_name
-      io.rancher.sidekicks: consul-data, registrator
+      io.rancher.sidekicks: consul-data
       io.rancher.container.pull_image: always
 
   
