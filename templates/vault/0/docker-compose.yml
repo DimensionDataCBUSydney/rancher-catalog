@@ -36,6 +36,7 @@ services:
     image: artifactory.devops.itaas-cloud.com:6553/vault-init:latest
     environment:
       - rancher=1
+      - LOCATION_KEY=$location_keys
     depends_on:
       - vault
     volumes_from:
