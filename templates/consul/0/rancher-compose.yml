@@ -1,6 +1,5 @@
 .catalog:
-  name: "dd-consul"
+  name: "consul"
   description: "service layer v3 consul"
   version: "0.1"
-  uuid: servicelayer3-consul-1
   questions:

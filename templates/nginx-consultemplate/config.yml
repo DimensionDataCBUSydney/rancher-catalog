@@ -1,5 +1,5 @@
-name: "dd-consul"
-description:  consul catalog
+name: "nginx-consultemplate"
+description:  nginx proxy with consul template configuration catalog
 version: 0.1
 category: service layer
 maintainer: Kumar Chockalingam

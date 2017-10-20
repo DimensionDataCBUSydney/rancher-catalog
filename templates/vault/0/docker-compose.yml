@@ -1,0 +1,46 @@
+version: '2'
+services:
+  vault:
+    image: vault:0.8.1
+    cap_add:
+      - IPC_LOCK
+    environment:
+      - rancher=1
+      - VAULT_REDIRECT_INTERFACE=eth0
+    entrypoint: /opt/vault/run.sh vault server -config=/vault/config/vault.json
+    external_links:
+      - $consul_service:consul
+    expose:
+      - 8200
+    volumes_from:
+      - vault-config
+    labels:
+      io.rancher.container.hostname_override: container_name
+      io.rancher.sidekicks: vault-init, vault-config
+      io.rancher.container.pull_image: always
+
+  vault-config:
+    image: artifactory.devops.itaas-cloud.com:6553/vault-config:latest
+    network_mode: none
+    volumes:
+      - /opt/vault
+      - /vault/config
+    entrypoint:
+      - /bin/true
+    labels:
+      io.rancher.container.hostname_override: container_name
+      io.rancher.container.start_once: true
+      io.rancher.container.pull_image: always
+
+  vault-init:
+    image: artifactory.devops.itaas-cloud.com:6553/vault-init:latest
+    environment:
+      - rancher=1
+    depends_on:
+      - vault
+    volumes_from:
+      - vault-config
+    labels:
+      io.rancher.container.hostname_override: container_name
+      io.rancher.container.start_once: true
+      io.rancher.container.pull_image: always

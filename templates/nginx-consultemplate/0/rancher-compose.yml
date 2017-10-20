@@ -1,5 +1,5 @@
 .catalog:
-  name: "dd-nginx-consultemplate"
+  name: "nginx-consultemplate"
   description: "nginx proxy configuration with Consul Template"
   version: "0.1"
   questions:
