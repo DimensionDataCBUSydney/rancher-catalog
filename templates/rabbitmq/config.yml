@@ -1,7 +1,7 @@
-name: "service-layer-v3-test"
-description:  service layer test catalog
+name: "rabbitmq"
+description:  rabbitmq catalog
 version: 0.1
-category: Applications
+category: service layer
 maintainer: Kumar Chockalingam
 license: # The license
 projectURL: # A URL related to the catalog entry
