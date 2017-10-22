@@ -25,6 +25,7 @@ services:
     environment:
       - CONSUL_PORT_8500_TCP_ADDR=consul
       - LOG_LEVEL=debug
+      - SERVICE_IGNORE=true
     volumes_from:
       - nginx-config
       - nginx-log
