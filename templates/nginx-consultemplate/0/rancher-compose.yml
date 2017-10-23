@@ -87,6 +87,7 @@
       required: true
       default: letsencrypt-certs
       type: string
+version: '2'
 services:
   haproxy:
     scale: 1
