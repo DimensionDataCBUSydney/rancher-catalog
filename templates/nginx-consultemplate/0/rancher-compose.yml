@@ -96,15 +96,12 @@ services:
       port_rules:
       - protocol: https
         service: nginx
+        access: public
         source_port: 443
         target_port: 80
         hostname: ${PUBLIC_DNS_HOSTNAME}
-      - protocol: tcp
-        service: nginx
-        source_port: 8080
-        target_port: 5672
-        hostname: ${PUBLIC_DNS_HOSTNAME}
       - protocol: http
+        access: public
         service: letsencrypt-nginx
         source_port: 80
         target_port: 80
