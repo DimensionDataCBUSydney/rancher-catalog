@@ -93,8 +93,6 @@ services:
     scale: 1
     start_on_create: true
     lb_config:
-      certs:
-      - ${PUBLIC_DNS_HOSTNAME}
       port_rules:
       - protocol: https
         service: nginx
