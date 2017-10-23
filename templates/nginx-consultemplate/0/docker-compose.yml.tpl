@@ -39,21 +39,23 @@ services:
       io.rancher.sidekicks: nginx-config,nginx-log
       io.rancher.container.pull_image: always
 
-  lb:
-      image: rancher/lb-service-haproxy:v0.7.9
-      environment:
+  haproxy:
+    image: rancher/lb-service-haproxy:v0.7.9
+    environment:
       - SERVICE_IGNORE=true
-      labels:
-        io.rancher.container.hostname_override: container_name
-        io.rancher.container.agent.role: environmentAdmin
-        io.rancher.container.create_agent: 'true'
-        io.rancher.lb_service.cert_dir: /certs/live
-        io.rancher.lb_service.default_cert_dir: /certs/live/${PUBLIC_DNS_HOSTNAME}
-      volumes:
-        - ${VOLUME_NAME}:/certs
+    labels:
+      io.rancher.container.hostname_override: container_name
+      io.rancher.container.agent.role: environmentAdmin
+      io.rancher.container.create_agent: 'true'
+      io.rancher.lb_service.cert_dir: /certs/live
+      io.rancher.lb_service.default_cert_dir: /certs/live/${PUBLIC_DNS_HOSTNAME}
+    volumes:
+      - ${VOLUME_NAME}:/certs
 
   letsencrypt-nginx:
     image: nginx:alpine
+    environment:
+      - SERVICE_IGNORE=true
     volumes:
       - letsencrypt-verify:/usr/share/nginx/html/
     labels:
@@ -63,6 +65,7 @@ services:
   rancher-lets-encrypt:
     image: tozny/rancher-lets-encrypt
     environment:
+      - SERVICE_IGNORE=true
       - DOMAINS=${DOMAINS}
       - CERTBOT_WEBROOT=${CERTBOT_WEBROOT}
       - CERTBOT_EMAIL=${CERTBOT_EMAIL}

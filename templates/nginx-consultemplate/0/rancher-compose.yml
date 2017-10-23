@@ -90,25 +90,25 @@
       scale: 1
     rancher-lets-encrypt:
       scale: 1
-    lb:
+    haproxy:
       scale: 1
       start_on_create: true
       lb_config:
-        port-rules:
-          - protocol: https
-            service: nginx
-            source_port: 443
-            target_port: 80
-            hostname: ${PUBLIC_DNS_HOSTNAME}
-          - protocol: tcp
-            service: nginx
-            source_port: 8080
-            target_port: 5672
-            hostname: ${PUBLIC_DNS_HOSTNAME}
-          - protocol: http
-            service: letsencrypt-nginx
-            source_port: 80
-            target_port: 80
-            path: /.well-known/
-            hostname: ${PUBLIC_DNS_HOSTNAME}
+        port_rules:
+        - protocol: https
+          service: nginx
+          source_port: 443
+          target_port: 80
+          hostname: ${PUBLIC_DNS_HOSTNAME}
+        - protocol: tcp
+          service: nginx
+          source_port: 8080
+          target_port: 5672
+          hostname: ${PUBLIC_DNS_HOSTNAME}
+        - protocol: http
+          service: letsencrypt-nginx
+          source_port: 80
+          target_port: 80
+          path: /.well-known/
+          hostname: ${PUBLIC_DNS_HOSTNAME}
             
