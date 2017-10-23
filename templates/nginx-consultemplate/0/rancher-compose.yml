@@ -96,14 +96,17 @@ services:
         source_port: 443
         target_port: 80
         priority: 1
+        hostname: ${PUBLIC_DNS_HOSTNAME}
       - protocol: tcp
         service: nginx
         source_port: 8080
         target_port: 5672
         priority: 2
+        hostname: ${PUBLIC_DNS_HOSTNAME}
       - protocol: http
         service: letsencrypt-nginx
         source_port: 80
         target_port: 80
         priority: 3
-        path: /.well-known/            
+        path: /.well-known/
+        hostname: ${PUBLIC_DNS_HOSTNAME}          
