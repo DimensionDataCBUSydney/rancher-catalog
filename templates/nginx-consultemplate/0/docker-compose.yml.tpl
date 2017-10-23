@@ -43,6 +43,10 @@ services:
     image: rancher/lb-service-haproxy:v0.7.9
     environment:
       - SERVICE_IGNORE=true
+    ports:
+      - 443:443
+      - 80:80
+      - 8080:8080
     labels:
       io.rancher.container.agent.role: environmentAdmin
       io.rancher.container.create_agent: 'true'
