@@ -44,7 +44,6 @@ services:
     environment:
       - SERVICE_IGNORE=true
     labels:
-      io.rancher.container.hostname_override: container_name
       io.rancher.container.agent.role: environmentAdmin
       io.rancher.container.create_agent: 'true'
       io.rancher.lb_service.cert_dir: /certs/live
