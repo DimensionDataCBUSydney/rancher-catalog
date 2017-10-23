@@ -98,18 +98,21 @@ services:
         service: nginx
         source_port: 443
         target_port: 80
+        hostname: ${PUBLIC_DNS_HOSTNAME}
       - protocol: tcp
         service: nginx
         source_port: 8080
         target_port: 5672
+        hostname: ${PUBLIC_DNS_HOSTNAME}
       - protocol: http
         service: letsencrypt-nginx
         source_port: 80
         target_port: 80
         path: /.well-known/
+        hostname: ${PUBLIC_DNS_HOSTNAME}
     health_check:
       port: 42
-      interval: health
+      interval: 2000
       unhealthy_threshold: 3
       healthy_threshold: 2
       response_timeout: 2000
