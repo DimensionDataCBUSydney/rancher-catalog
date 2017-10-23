@@ -97,15 +97,18 @@ services:
         service: nginx
         source_port: 443
         target_port: 80
-        priority: 1
       - protocol: tcp
         service: nginx
         source_port: 8080
         target_port: 5672
-        priority: 2
       - protocol: http
         service: letsencrypt-nginx
         source_port: 80
         target_port: 80
-        priority: 3
         path: /.well-known/
+    health_check:
+      port: 42
+      interval: health
+      unhealthy_threshold: 3
+      healthy_threshold: 2
+      response_timeout: 2000
