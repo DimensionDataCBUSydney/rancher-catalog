@@ -85,30 +85,25 @@
         By default this will be a (host scoped) named Docker volume. See "Persistent Storage Driver" for other options.
       required: true
       type: string
-  services:
-    letsencrypt-nginx:
-      scale: 1
-    rancher-lets-encrypt:
-      scale: 1
-    haproxy:
-      scale: 1
-      start_on_create: true
-      lb_config:
-        port_rules:
-        - protocol: https
-          service: nginx
-          source_port: 443
-          target_port: 80
-          hostname: ${PUBLIC_DNS_HOSTNAME}
-        - protocol: tcp
-          service: nginx
-          source_port: 8080
-          target_port: 5672
-          hostname: ${PUBLIC_DNS_HOSTNAME}
-        - protocol: http
-          service: letsencrypt-nginx
-          source_port: 80
-          target_port: 80
-          path: /.well-known/
-          hostname: ${PUBLIC_DNS_HOSTNAME}
-            
+services:
+  haproxy:
+    scale: 1
+    start_on_create: true
+    lb_config:
+      port_rules:
+      - protocol: https
+        service: nginx
+        source_port: 443
+        target_port: 80
+        priority: 1
+      - protocol: tcp
+        service: nginx
+        source_port: 8080
+        target_port: 5672
+        priority: 2
+      - protocol: http
+        service: letsencrypt-nginx
+        source_port: 80
+        target_port: 80
+        priority: 3
+        path: /.well-known/            
