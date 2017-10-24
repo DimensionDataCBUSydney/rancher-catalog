@@ -5,7 +5,7 @@ services:
     environment:
       - SERVICE_IGNORE=true
     ports:
-      - ${HOST_CHECK_PORT}:${HOST_CHECK_PORT}
+      - ${HOST_CHECK_PORT}:80
     volumes:
       - letsencrypt-verify:/usr/share/nginx/html/
     labels:
