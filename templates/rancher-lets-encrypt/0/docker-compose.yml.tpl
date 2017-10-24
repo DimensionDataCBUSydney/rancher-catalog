@@ -4,26 +4,19 @@ services:
     image: nginx:alpine
     environment:
       - SERVICE_IGNORE=true
+    ports:
+      - ${HOST_CHECK_PORT}:${HOST_CHECK_PORT}
     volumes:
       - letsencrypt-verify:/usr/share/nginx/html/
     labels:
+      io.rancher.container.hostname_override: container_name
       io.rancher.sidekicks: rancher-lets-encrypt
-
-  lb:
-    image: rancher/lb-service-haproxy:v0.7.9
-    environment:
-      - SERVICE_IGNORE=true
-    ports:
-      - ${HOST_CHECK_PORT}:80
-    labels:
-      io.rancher.container.agent.role: environmentAdmin
-      io.rancher.container.create_agent: 'true'
 
   rancher-lets-encrypt:
     image: tozny/rancher-lets-encrypt
     environment:
       - SERVICE_IGNORE=true
-      - DOMAINS=${DOMAINS}
+      - DOMAINS=${DOMAIN}
       - CERTBOT_WEBROOT=${CERTBOT_WEBROOT}
       - CERTBOT_EMAIL=${CERTBOT_EMAIL}
       - RENEW_BEFORE_DAYS=${RENEW_BEFORE_DAYS}
@@ -38,7 +31,6 @@ services:
       io.rancher.container.hostname_override: container_name
       io.rancher.container.create_agent: 'true'
       io.rancher.container.agent.role: environment
-
 volumes:
   {{.Values.VOLUME_NAME}}:
     {{- if .Values.STORAGE_DRIVER}}

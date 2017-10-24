@@ -67,6 +67,7 @@ catalog:
         To use a stack scoped volume backed by a persistent storage service, enter the name
         of an existing storage driver (see `Infrastructure -> Storage`). This also requires "Volume Name" to be set.
       required: false
+      default: rancher-nfs
       type: string
     - variable: STORAGE_DRIVER_OPT
       label: Storage Driver Option (Optional)
@@ -74,30 +75,12 @@ catalog:
         Specify a single "driver_opts" key/value pair in the format "optionName: optionValue ".
         E.g. for the `rancher-ebs` driver you should specify the required 'size' option like this: "size: 1".
       required: false
-      default: 'onRemove: retain'
+      default: 'onRemove: purge'
       type: string
     - variable: VOLUME_NAME
-      label: Volume Name (Optional)
+      label: Volume Name
       description: |
         To store the account data, certificates and private keys in a volume, enter the volume name that should be used.
-        By default this will be a (host scoped) named Docker volume. See "Persistent Storage Driver" for other options.
-      required: false
+      required: true
       type: string
-
-services:
-  lb:
-    scale: 1
-    start_on_create: true
-    lb_config:
-      port_rules:
-      - protocol: http
-        service: letsencrypt-nginx
-        source_port: ${HOST_CHECK_PORT}
-        target_port: 80
-        hostname: ${DOMAIN}
-    health_check:
-      port: 42
-      interval: 2000
-      unhealthy_threshold: 3
-      healthy_threshold: 2
-      response_timeout: 2000
+      default: letsencrypt-cert
