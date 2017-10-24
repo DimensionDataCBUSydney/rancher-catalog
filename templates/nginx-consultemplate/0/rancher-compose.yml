@@ -19,7 +19,7 @@
       description: |
         E.g: `mci.ci.dimensiondata.cloud`.
       required: true
-      type: string
+      type: certificate
     - variable: CERT_VOLUME
       label: name of the volume where the certificates are stored
       description: 
