@@ -36,7 +36,7 @@ services:
      - $consul_service:consul
     labels:
       io.rancher.container.hostname_override: container_name
-      io.rancher.sidekicks: nginx-config,nginx-log,service-lb
+      io.rancher.sidekicks: nginx-config,nginx-log
       io.rancher.container.pull_image: always
 
   service-lb:
@@ -71,7 +71,7 @@ services:
       - letsencrypt-verify:/usr/share/nginx/html/
     labels:
       io.rancher.container.hostname_override: container_name
-      io.rancher.sidekicks: rancher-lets-encrypt, cert-lb
+      io.rancher.sidekicks: rancher-lets-encrypt
 
   rancher-lets-encrypt:
     image: tozny/rancher-lets-encrypt
