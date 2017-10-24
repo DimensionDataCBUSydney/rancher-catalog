@@ -24,7 +24,7 @@
       label: name of the volume where the certificates are stored
       description: 
       required: false
-      type: "volume"
+      type: "string"
     - variable: STORAGE_DRIVER
       label: Volume Storage Driver (Optional)
       description: |
