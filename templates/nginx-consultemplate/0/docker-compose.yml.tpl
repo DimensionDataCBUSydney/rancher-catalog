@@ -24,6 +24,7 @@ services:
     image: artifactory.devops.itaas-cloud.com:6553/nginx-consultemplate:latest
     environment:
       - CONSUL_PORT_8500_TCP_ADDR=consul
+      - CERT_NAME=${CERT_NAME}
       - TCP_SSL=${TCP_SSL}
       - LOG_LEVEL=debug
       - SERVICE_IGNORE=true
@@ -31,7 +32,7 @@ services:
       - nginx-config
       - nginx-log
     volumes:
-      - ${CERT_VOLUME}:/etc/letsencrypt/certs
+      - ${CERT_VOLUME}:/etc/letsencrypt
     expose:
       - 80
       - 5672
