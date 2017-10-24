@@ -105,7 +105,6 @@ services:
         service: letsencrypt-nginx
         source_port: ${HOST_CHECK_PORT}
         target_port: 80
-        path: /.well-known/
         hostname: ${PUBLIC_DNS_HOSTNAME}
     health_check:
       port: 42
