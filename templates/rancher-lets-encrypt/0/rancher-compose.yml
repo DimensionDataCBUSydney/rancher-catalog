@@ -6,10 +6,10 @@ catalog:
   category: service layer
   minimum_rancher_version: v1.1.0
   questions:
-    - variable: DOMAIN
-      label: Domain Name
+    - variable: DOMAINS
+      label: Domain Names
       description: |
-        E.g: `example.com`.
+        E.g: `example.com,test.com`.
       required: true
       type: string
     - variable: CERTBOT_WEBROOT
@@ -75,7 +75,6 @@ catalog:
         Specify a single "driver_opts" key/value pair in the format "optionName: optionValue ".
         E.g. for the `rancher-ebs` driver you should specify the required 'size' option like this: "size: 1".
       required: false
-      default: 'onRemove: purge'
       type: string
     - variable: VOLUME_NAME
       label: Volume Name

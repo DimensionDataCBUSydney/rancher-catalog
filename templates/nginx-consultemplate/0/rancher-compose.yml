@@ -15,13 +15,13 @@
       required: true
       default: false
     - variable: CERT_NAME
-      label: certificate name in rancher certificate store
+      label: Certificate Name
       description: |
         E.g: `mci.ci.dimensiondata.cloud`.
       required: true
       type: certificate
     - variable: CERT_VOLUME
-      label: name of the volume where the certificates are stored
+      label: Certificate External Volume Name
       description: 
       required: false
       type: "string"

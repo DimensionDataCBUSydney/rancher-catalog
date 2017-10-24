@@ -16,7 +16,7 @@ services:
     image: tozny/rancher-lets-encrypt
     environment:
       - SERVICE_IGNORE=true
-      - DOMAINS=${DOMAIN}
+      - DOMAINS=${DOMAINS}
       - CERTBOT_WEBROOT=${CERTBOT_WEBROOT}
       - CERTBOT_EMAIL=${CERTBOT_EMAIL}
       - RENEW_BEFORE_DAYS=${RENEW_BEFORE_DAYS}
