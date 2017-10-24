@@ -62,8 +62,6 @@ services:
     labels:
       io.rancher.container.agent.role: environmentAdmin
       io.rancher.container.create_agent: 'true'
-    volumes:
-      - ${VOLUME_NAME}:/certs
 
   letsencrypt-nginx:
     image: nginx:alpine
@@ -71,11 +69,9 @@ services:
       - SERVICE_IGNORE=true
     volumes:
       - letsencrypt-verify:/usr/share/nginx/html/
-    ports:
-      - 80:80
     labels:
       io.rancher.container.hostname_override: container_name
-      io.rancher.sidekicks: rancher-lets-encrypt
+      io.rancher.sidekicks: rancher-lets-encrypt, cert-lb
 
   rancher-lets-encrypt:
     image: tozny/rancher-lets-encrypt
