@@ -24,11 +24,14 @@ services:
     image: artifactory.devops.itaas-cloud.com:6553/nginx-consultemplate:latest
     environment:
       - CONSUL_PORT_8500_TCP_ADDR=consul
+      - TCP_SSL=${TCP_SSL}
       - LOG_LEVEL=debug
       - SERVICE_IGNORE=true
     volumes_from:
       - nginx-config
       - nginx-log
+    volumes:
+      - ${CERT_VOLUME}:/etc/letsencrypt/certs
     expose:
       - 80
       - 5672
@@ -48,3 +51,9 @@ services:
     labels:
       io.rancher.container.agent.role: environmentAdmin
       io.rancher.container.create_agent: 'true'
+volumes:
+  {{.Values.CERT_VOLUME}}:
+    {{- if .Values.STORAGE_DRIVER}}
+    driver: {{.Values.STORAGE_DRIVER}}
+    external: true
+    {{- end }}

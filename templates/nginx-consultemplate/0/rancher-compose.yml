@@ -8,11 +8,30 @@
       label: "Consul Service"
       type: "service"
       required: true
+    - variable: "TCP_SSL"
+      description: "ssl for tcp service"
+      label: "SSL for TCP Connection"
+      type: "boolean"
+      required: true
+      default: false
     - variable: CERT_NAME
       label: certificate name in rancher certificate store
       description: |
         E.g: `mci.ci.dimensiondata.cloud`.
       required: true
+      type: string
+    - variable: CERT_VOLUME
+      label: name of the volume where the certificates are stored
+      description: 
+      required: false
+      type: string
+    - variable: STORAGE_DRIVER
+      label: Volume Storage Driver (Optional)
+      description: |
+        To use a stack scoped volume backed by a persistent storage service, enter the name
+        of an existing storage driver (see `Infrastructure -> Storage`). This also requires "Volume Name" to be set.
+      required: false
+      default: rancher-nfs
       type: string
 version: '2'
 services:
@@ -26,6 +45,11 @@ services:
         service: nginx
         source_port: 443
         target_port: 80
+        hostname: ${CERT_NAME}
+      - protocol: tcp
+        service: nginx
+        source_port: 8080
+        target_port: 5672
         hostname: ${CERT_NAME}
     health_check:
       port: 42
