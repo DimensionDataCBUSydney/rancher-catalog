@@ -49,6 +49,7 @@ services:
       - SERVICE_IGNORE=true
     ports:
       - 443:443
+      - 8080:8080
     labels:
       io.rancher.container.agent.role: environmentAdmin
       io.rancher.container.create_agent: 'true'
