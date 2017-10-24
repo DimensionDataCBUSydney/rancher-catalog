@@ -39,7 +39,7 @@ services:
     scale: 1
     start_on_create: true
     lb_config:
-      default_cert: <CERT_NAME>
+      default_cert: ${CERT_NAME}
       port_rules:
       - protocol: https
         service: nginx
