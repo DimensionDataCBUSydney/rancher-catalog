@@ -45,7 +45,6 @@ services:
       - SERVICE_IGNORE=true
     ports:
       - 443:443
-      - 80:80
       - 8080:8080
     labels:
       io.rancher.container.agent.role: environmentAdmin
@@ -61,6 +60,8 @@ services:
       - SERVICE_IGNORE=true
     volumes:
       - letsencrypt-verify:/usr/share/nginx/html/
+    ports:
+      - 80:80
     labels:
       io.rancher.container.hostname_override: container_name
       io.rancher.sidekicks: rancher-lets-encrypt
