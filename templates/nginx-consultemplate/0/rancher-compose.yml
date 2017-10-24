@@ -9,7 +9,7 @@
       type: "service"
       required: true
     - variable: CERT_NAME
-      label: public dns hostname
+      label: certificate name in rancher certificate store
       description: |
         E.g: `mci.ci.dimensiondata.cloud`.
       required: true
@@ -20,8 +20,7 @@ services:
     scale: 1
     start_on_create: true
     lb_config:
-      certs:
-      - ${CERT_NAME}
+      default_cert: <CERT_NAME>
       port_rules:
       - protocol: https
         service: nginx
