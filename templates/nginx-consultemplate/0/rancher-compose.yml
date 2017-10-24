@@ -111,7 +111,6 @@ services:
     lb_config:
       port_rules:
       - protocol: http
-        path: /.well-known/
         service: letsencrypt-nginx
         source_port: 80
         target_port: 80
