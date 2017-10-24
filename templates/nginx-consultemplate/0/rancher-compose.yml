@@ -101,11 +101,6 @@ services:
         source_port: 443
         target_port: 80
         hostname: ${PUBLIC_DNS_HOSTNAME}
-      - protocol: http
-        service: letsencrypt-nginx
-        source_port: ${HOST_CHECK_PORT}
-        target_port: 80
-        hostname: ${PUBLIC_DNS_HOSTNAME}
     health_check:
       port: 42
       interval: 2000

@@ -45,7 +45,6 @@ services:
       - SERVICE_IGNORE=true
     ports:
       - 443:443
-      - ${HOST_CHECK_PORT}:${HOST_CHECK_PORT}
     labels:
       io.rancher.container.agent.role: environmentAdmin
       io.rancher.container.create_agent: 'true'
@@ -54,6 +53,8 @@ services:
     image: nginx:alpine
     environment:
       - SERVICE_IGNORE=true
+    ports:
+      - ${HOST_CHECK_PORT}:${HOST_CHECK_PORT}
     volumes:
       - letsencrypt-verify:/usr/share/nginx/html/
     labels:
