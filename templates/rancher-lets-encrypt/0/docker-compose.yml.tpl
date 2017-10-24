@@ -2,17 +2,27 @@ version: '2'
 services:
   letsencrypt-nginx:
     image: nginx:alpine
+    environment:
+      - SERVICE_IGNORE=true
     volumes:
       - letsencrypt-verify:/usr/share/nginx/html/
     labels:
       io.rancher.sidekicks: rancher-lets-encrypt
 
+  lb:
+    image: rancher/lb-service-haproxy:v0.7.9
+    environment:
+      - SERVICE_IGNORE=true
+    ports:
+      - ${HOST_CHECK_PORT}:80
+    labels:
+      io.rancher.container.agent.role: environmentAdmin
+      io.rancher.container.create_agent: 'true'
+
   rancher-lets-encrypt:
     image: tozny/rancher-lets-encrypt
-    # If there is only a key, Rancher Compose will resolve to the values
-    # on the machine or the file passed in using --env-file.
-    # If the values are set using Rancher's UI, they will override the values from the .env file
     environment:
+      - SERVICE_IGNORE=true
       - DOMAINS=${DOMAINS}
       - CERTBOT_WEBROOT=${CERTBOT_WEBROOT}
       - CERTBOT_EMAIL=${CERTBOT_EMAIL}
@@ -23,14 +33,12 @@ services:
       - HOST_CHECK_LOOP_TIME=${HOST_CHECK_LOOP_TIME}
     volumes:
       - letsencrypt-verify:${CERTBOT_WEBROOT}
-      {{- if .Values.VOLUME_NAME}}
-      - {{.Values.VOLUME_NAME}}:/etc/letsencrypt
-      {{- end }}
+      - ${VOLUME_NAME}:/etc/letsencrypt
     labels:
-      # if we add the container as a rancher agent, we get magical things like Rancher server URL, and access keys for F-R-E-E!
+      io.rancher.container.hostname_override: container_name
       io.rancher.container.create_agent: 'true'
       io.rancher.container.agent.role: environment
-{{- if .Values.VOLUME_NAME}}
+
 volumes:
   {{.Values.VOLUME_NAME}}:
     {{- if .Values.STORAGE_DRIVER}}
@@ -40,4 +48,3 @@ volumes:
       {{.Values.STORAGE_DRIVER_OPT}}
     {{- end }}
     {{- end }}
-{{- end }}

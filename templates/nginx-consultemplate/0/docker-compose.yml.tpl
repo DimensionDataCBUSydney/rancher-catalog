@@ -36,7 +36,7 @@ services:
      - $consul_service:consul
     labels:
       io.rancher.container.hostname_override: container_name
-      io.rancher.sidekicks: nginx-config,nginx-log
+      io.rancher.sidekicks: nginx-config,nginx-log,service-lb
       io.rancher.container.pull_image: always
 
   service-lb:
@@ -52,13 +52,13 @@ services:
       io.rancher.lb_service.default_cert_dir: /certs/live/${PUBLIC_DNS_HOSTNAME}
     volumes:
       - ${VOLUME_NAME}:/certs
-  
+
   cert-lb:
     image: rancher/lb-service-haproxy:v0.7.9
     environment:
       - SERVICE_IGNORE=true
     ports:
-      - 80:80
+      - ${HOST_CHECK_PORT}:${HOST_CHECK_PORT}
     labels:
       io.rancher.container.agent.role: environmentAdmin
       io.rancher.container.create_agent: 'true'
@@ -71,13 +71,13 @@ services:
       - letsencrypt-verify:/usr/share/nginx/html/
     labels:
       io.rancher.container.hostname_override: container_name
-      io.rancher.sidekicks: rancher-lets-encrypt
+      io.rancher.sidekicks: rancher-lets-encrypt, cert-lb
 
   rancher-lets-encrypt:
     image: tozny/rancher-lets-encrypt
     environment:
       - SERVICE_IGNORE=true
-      - DOMAINS=${DOMAINS}
+      - DOMAINS=${PUBLIC_DNS_HOSTNAME}
       - CERTBOT_WEBROOT=${CERTBOT_WEBROOT}
       - CERTBOT_EMAIL=${CERTBOT_EMAIL}
       - RENEW_BEFORE_DAYS=${RENEW_BEFORE_DAYS}

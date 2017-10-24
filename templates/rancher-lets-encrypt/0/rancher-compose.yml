@@ -6,11 +6,10 @@ catalog:
   category: service layer
   minimum_rancher_version: v1.1.0
   questions:
-    - variable: DOMAINS
-      label: Domain Names
+    - variable: DOMAIN
+      label: Domain Name
       description: |
-        Comma delimited list of the certificate domains (without spaces).
-        E.g: `example.com,dev.example.com,test.example.com`.
+        E.g: `example.com`.
       required: true
       type: string
     - variable: CERTBOT_WEBROOT
@@ -86,8 +85,19 @@ catalog:
       type: string
 
 services:
-  letsencrypt-nginx:
+  lb:
     scale: 1
-
-  rancher-lets-encrypt:
-    scale: 1
+    start_on_create: true
+    lb_config:
+      port_rules:
+      - protocol: http
+        service: letsencrypt-nginx
+        source_port: ${HOST_CHECK_PORT}
+        target_port: 80
+        hostname: ${DOMAIN}
+    health_check:
+      port: 42
+      interval: 2000
+      unhealthy_threshold: 3
+      healthy_threshold: 2
+      response_timeout: 2000
