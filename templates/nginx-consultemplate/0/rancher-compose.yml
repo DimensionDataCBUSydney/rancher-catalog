@@ -89,7 +89,7 @@
       type: string
 version: '2'
 services:
-  haproxy:
+  service-lb:
     scale: 1
     start_on_create: true
     lb_config:
@@ -97,6 +97,23 @@ services:
       - protocol: https
         service: nginx
         source_port: 443
+        target_port: 80
+        hostname: ${PUBLIC_DNS_HOSTNAME}
+    health_check:
+      port: 42
+      interval: 2000
+      unhealthy_threshold: 3
+      healthy_threshold: 2
+      response_timeout: 2000
+  cert-lb:
+    scale: 1
+    start_on_create: true
+    lb_config:
+      port_rules:
+      - protocol: http
+        path: /.well-known/
+        service: letsencrypt-nginx
+        source_port: 80
         target_port: 80
         hostname: ${PUBLIC_DNS_HOSTNAME}
     health_check:
