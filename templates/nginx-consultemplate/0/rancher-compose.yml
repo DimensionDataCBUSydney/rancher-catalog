@@ -54,7 +54,7 @@
       description: |
         The port on which the loadbalancer expects the requests to the letsencrypt-service.
       required: true
-      default: 8081
+      default: 80
       type: int
     - variable: HOST_CHECK_LOOP_TIME
       label: Host Check Loop Time
@@ -89,9 +89,11 @@
       type: string
 version: '2'
 services:
-  service-lb:
+  haproxy:
     scale: 1
     start_on_create: true
+    certs:
+      - ${PUBLIC_DNS_HOSTNAME}
     lb_config:
       port_rules:
       - protocol: https
@@ -99,21 +101,11 @@ services:
         source_port: 443
         target_port: 80
         hostname: ${PUBLIC_DNS_HOSTNAME}
-    health_check:
-      port: 42
-      interval: 2000
-      unhealthy_threshold: 3
-      healthy_threshold: 2
-      response_timeout: 2000
-  cert-lb:
-    scale: 1
-    start_on_create: true
-    lb_config:
-      port_rules:
       - protocol: http
         service: letsencrypt-nginx
         source_port: ${HOST_CHECK_PORT}
         target_port: 80
+        path: /.well-known/
         hostname: ${PUBLIC_DNS_HOSTNAME}
     health_check:
       port: 42

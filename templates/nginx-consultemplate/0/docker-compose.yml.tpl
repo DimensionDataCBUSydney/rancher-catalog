@@ -39,25 +39,12 @@ services:
       io.rancher.sidekicks: nginx-config,nginx-log
       io.rancher.container.pull_image: always
 
-  service-lb:
+  haproxy:
     image: rancher/lb-service-haproxy:v0.7.9
     environment:
       - SERVICE_IGNORE=true
     ports:
       - 443:443
-    labels:
-      io.rancher.container.agent.role: environmentAdmin
-      io.rancher.container.create_agent: 'true'
-      io.rancher.lb_service.cert_dir: /certs/live
-      io.rancher.lb_service.default_cert_dir: /certs/live/${PUBLIC_DNS_HOSTNAME}
-    volumes:
-      - ${VOLUME_NAME}:/certs
-
-  cert-lb:
-    image: rancher/lb-service-haproxy:v0.7.9
-    environment:
-      - SERVICE_IGNORE=true
-    ports:
       - ${HOST_CHECK_PORT}:${HOST_CHECK_PORT}
     labels:
       io.rancher.container.agent.role: environmentAdmin
