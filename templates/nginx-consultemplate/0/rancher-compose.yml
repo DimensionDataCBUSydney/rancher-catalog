@@ -8,7 +8,7 @@
       label: "Consul Service"
       type: "service"
       required: true
-    - variable: PUBLIC_DNS_HOSTNAME
+    - variable: CERT_NAME
       label: public dns hostname
       description: |
         E.g: `mci.ci.dimensiondata.cloud`.
@@ -21,13 +21,13 @@ services:
     start_on_create: true
     lb_config:
       certs:
-      - ${PUBLIC_DNS_HOSTNAME}
+      - ${CERT_NAME}
       port_rules:
       - protocol: https
         service: nginx
         source_port: 443
         target_port: 80
-        hostname: ${PUBLIC_DNS_HOSTNAME}
+        hostname: ${CERT_NAME}
     health_check:
       port: 42
       interval: 2000
