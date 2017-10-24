@@ -84,3 +84,10 @@ catalog:
       required: true
       type: string
       default: letsencrypt-cert
+    - variable: EXTERNAL_VOLUME
+      label: External Volume
+      description: |
+        To store the account data, certificates and private keys in a volume, enter the volume name that should be used.
+      required: false
+      type: boolean
+      default: false

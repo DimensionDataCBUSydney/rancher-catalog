@@ -25,6 +25,7 @@
       description: 
       required: false
       type: "string"
+      default: letsencrypt-cert
     - variable: STORAGE_DRIVER
       label: Volume Storage Driver (Optional)
       description: |
