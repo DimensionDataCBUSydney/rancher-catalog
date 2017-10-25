@@ -1,0 +1,15 @@
+.catalog:
+  name: "sqlserver-2017"
+  description: "service layer sql server"
+  version: "0.1"
+  questions:
+    - variable: "vault_service"
+      description: "Link to vault service"
+      label: "VAULT Service"
+      type: "service"
+      required: false
+    - variable: "SA_PASSWORD"
+      description: "SQL SA PASSWORD"
+      label: "SQL SA PASSWORD"
+      type: "string"
+      required: true
