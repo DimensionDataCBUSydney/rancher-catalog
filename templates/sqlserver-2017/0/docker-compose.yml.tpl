@@ -11,8 +11,6 @@ services:
       - SERVICE_1433_ID=SQL:8200
     external_links:
       - $vault_service:vault
-    volumes:
-      - /opt
     expose:
       - 1433
     labels:
@@ -27,7 +25,7 @@ services:
     external_links:
       - $vault_service:vault
     entrypoint: ./run.sh sql ${SA_PASSWORD}
-    volumes_from:
+    depends_on:
       - sql
     labels:
       io.rancher.container.hostname_override: container_name
