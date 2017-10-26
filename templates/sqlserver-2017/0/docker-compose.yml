@@ -12,7 +12,7 @@ services:
     external_links:
       - $vault_service:vault
     volumes:
-      - /opt/mssql-tools
+      - /opt
     expose:
       - 1433
     labels:
