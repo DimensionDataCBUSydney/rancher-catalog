@@ -11,5 +11,5 @@
     - variable: "SA_PASSWORD"
       description: "SQL SA PASSWORD"
       label: "SQL SA PASSWORD"
-      type: "string"
+      type: "password"
       required: true
