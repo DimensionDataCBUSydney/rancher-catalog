@@ -12,9 +12,22 @@ services:
     external_links:
       - $vault_service:vault
     volumes:
-      - ${VOLUME_NAME}:/var/opt/mssql 
+      - ${VOLUME_NAME}:/var/opt/mssql
+    volumes_from:
+      - sqlscripts
     expose:
       - 1433
+    labels:
+      io.rancher.container.hostname_override: container_name
+      io.rancher.container.pull_image: always
+  sqlscripts:
+    image: artifactory.devops.itaas-cloud.com:6553/sqlscripts:latest
+    environment:
+      - SERVICE_IGNORE=Y
+    external_links:
+      - $vault_service:vault
+    volumes:
+      - /docker-entrypoint-initdb.d
     labels:
       io.rancher.container.hostname_override: container_name
       io.rancher.container.pull_image: always

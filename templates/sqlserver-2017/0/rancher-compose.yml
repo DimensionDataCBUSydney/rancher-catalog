@@ -35,3 +35,4 @@
         To store the sql data in a volume, enter the volume name that should be used.
       required: true
       default: sqldata
+      type: string
