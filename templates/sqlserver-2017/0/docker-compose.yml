@@ -11,16 +11,19 @@ services:
       - SERVICE_1433_ID=SQL:8200
     external_links:
       - $vault_service:vault
+    volumes:
+      - ${VOLUME_NAME}:/var/opt/mssql 
     expose:
       - 1433
     labels:
       io.rancher.container.hostname_override: container_name
       io.rancher.container.pull_image: always
-  sqlcmd:
-    image: fabiang/sqlcmd:latest
-    environment:
-      - SERVICE_IGNORE=true
-    command: -S sql -U ${SA_PASSWORD}
-    labels:
-      io.rancher.container.hostname_override: container_name
-      io.rancher.container.pull_image: always
+volumes:
+  {{.Values.VOLUME_NAME}}:
+    {{- if .Values.STORAGE_DRIVER}}
+    driver: {{.Values.STORAGE_DRIVER}}
+    {{- if .Values.STORAGE_DRIVER_OPT}}
+    driver_opts:
+      {{.Values.STORAGE_DRIVER_OPT}}
+    {{- end }}
+    {{- end }}
