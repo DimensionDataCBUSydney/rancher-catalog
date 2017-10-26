@@ -12,25 +12,26 @@ services:
     external_links:
       - $vault_service:vault
     volumes:
-      - ${VOLUME_NAME}:/var/opt/mssql
-    volumes_from:
-      - sqlscripts
+      - /opt/mssql-tools
     expose:
       - 1433
     labels:
       io.rancher.sidekicks: sqlscripts
       io.rancher.container.hostname_override: container_name
       io.rancher.container.pull_image: always
+  
   sqlscripts:
     image: artifactory.devops.itaas-cloud.com:6553/sqlscripts:latest
     environment:
       - SERVICE_IGNORE=false
     external_links:
       - $vault_service:vault
-    volumes:
-      - /docker-entrypoint-initdb.d
+    entrypoint: ./run.sh sql ${SA_PASSWORD}
+    volumes_from:
+      - sql
     labels:
       io.rancher.container.hostname_override: container_name
+      io.rancher.container.start_once: true
       io.rancher.container.pull_image: always
 volumes:
   {{.Values.VOLUME_NAME}}:
