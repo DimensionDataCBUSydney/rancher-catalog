@@ -16,3 +16,11 @@ services:
     labels:
       io.rancher.container.hostname_override: container_name
       io.rancher.container.pull_image: always
+  sqlcmd:
+    image: fabiang/sqlcmd:latest
+    environment:
+      - SERVICE_IGNORE=true
+    command: -S sql -U ${SA_PASSWORD}
+    labels:
+      io.rancher.container.hostname_override: container_name
+      io.rancher.container.pull_image: always
