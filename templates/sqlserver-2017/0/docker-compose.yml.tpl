@@ -19,11 +19,13 @@ services:
       io.rancher.container.pull_image: always
   
   sqlscripts:
-    image: artifactory.devops.itaas-cloud.com:6553/sqlscripts:latest
+    image: artifactory.devops.itaas-cloud.com:6553/sql-init:latest
     environment:
-      - SERVICE_IGNORE=false
+      - SERVICE_IGNORE=true
+      - Location_Key=${Location_Key}
+      - Global=${Global}
     external_links:
-      - $vault_service:vault
+      - $consul_service:consul
     entrypoint: ./run.sh sql ${SA_PASSWORD}
     depends_on:
       - sql

@@ -3,11 +3,23 @@
   description: "service layer sql server"
   version: "0.1"
   questions:
-    - variable: "vault_service"
-      description: "Link to vault service"
-      label: "VAULT Service"
+    - variable: "consul_service"
+      description: "Link to Consul service"
+      label: "Consul Service"
       type: "service"
-      required: false
+      required: true
+    - variable: "Global"
+      description: "Global Environment"
+      label: "Is it a Global Environment SQL Server"
+      type: "boolean"
+      default: true
+      required: true
+    - variable: "Location_Key"
+      description: "Location Key"
+      label: "Location Key"
+      type: "string"
+      default: l01
+      required: true
     - variable: "SA_PASSWORD"
       description: "SQL SA PASSWORD"
       label: "SQL SA PASSWORD"
