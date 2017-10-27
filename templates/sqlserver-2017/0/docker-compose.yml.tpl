@@ -10,7 +10,7 @@ services:
       - SERVICE_1433_TAGS=tcp-proxy
       - SERVICE_1433_ID=SQL:8200
     external_links:
-      - $vault_service:vault
+      - $consul_service:consul
     expose:
       - 1433
     labels:
