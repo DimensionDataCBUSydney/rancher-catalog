@@ -11,8 +11,8 @@ services:
       - SERVICE_1433_ID=SQL:8200
     external_links:
       - $consul_service:consul
-    expose:
-      - 1433
+    ports:
+      - 1433:1433
     labels:
       io.rancher.sidekicks: sqlscripts
       io.rancher.container.hostname_override: container_name
@@ -21,6 +21,7 @@ services:
   sqlscripts:
     image: artifactory.devops.itaas-cloud.com:6553/sql-init:latest
     environment:
+      - rancher=1
       - SERVICE_IGNORE=true
       - Location_Key=${Location_Key}
       - Global=${Global}
