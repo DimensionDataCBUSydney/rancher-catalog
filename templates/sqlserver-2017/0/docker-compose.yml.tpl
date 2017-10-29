@@ -12,7 +12,7 @@ services:
     external_links:
       - $consul_service:consul
     ports:
-      - 1433:1433
+      - 1433
     labels:
       io.rancher.sidekicks: sqlscripts
       io.rancher.container.hostname_override: container_name
