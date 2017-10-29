@@ -6,9 +6,7 @@ services:
       - ACCEPT_EULA=Y
       - SA_PASSWORD=${SA_PASSWORD} 
       - VAULT_REDIRECT_INTERFACE=eth0
-      - SERVICE_1433_NAME=SQL
-      - SERVICE_1433_TAGS=tcp-proxy
-      - SERVICE_1433_ID=SQL:8200
+      - SERVICE_IGNORE=true
     external_links:
       - $consul_service:consul
     ports:
