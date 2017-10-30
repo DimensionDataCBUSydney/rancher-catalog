@@ -1,0 +1,14 @@
+version: '2'
+services:
+  dd-elastic-load:
+    image: artifactory.devops.itaas-cloud.com:6553/elk-config:latest
+    stdin_open: true
+    environment:
+      ELASTIC_HOST: ${elastic_host}
+      ELASTIC_HOST_HTTP: ${elastic_host_http}
+      BEATS_PACKAGES: ${beats_packages}
+    tty: true
+    labels:
+      io.rancher.container.hostname_override: container_name
+      io.rancher.container.pull_image: always
+      

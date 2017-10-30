@@ -1,0 +1,7 @@
+name: dd-elastic-load   
+description: Dimension Data Research Elastic Loads
+version: 1.0.0.1
+category: Elastic
+maintainer: "Chris Callanan calloes@gmail.com"
+minimum_rancher_version: v1.2.3
+projectURL: https://rancherlab.itaas-cloud.com

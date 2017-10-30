@@ -1,0 +1,77 @@
+.catalog:
+  name: "metricbeat"
+  version: "1.0"
+  description: "metricbeat"
+  uuid:
+  questions:
+    - variable: "logstash_source"
+      description: "Link to logstash service or stack/service"
+      label: "Logstash source"
+      type: "service"
+      required: true
+      default: ""
+    - variable: "input_period"
+      description: "How often to send data"
+      label: "input.period"
+      type: "string"
+      required: true
+      default: "5"
+    # - variable: "input_socket"
+    #   description: "Docker socket path"
+    #   label: "input.socket"
+    #   type: "string"
+    #   required: true
+    #   default: "unix:///var/run/docker.sock"
+    - variable: "logstash_url"
+      description: "Logstash"
+      label: "logstash needs to be localhost:5044"
+      type: "string"
+      required: true
+      default: "urlstring"
+    - variable: "logstash_workers"
+      description: "logstash_workers"
+      label: "logstash_workers"
+      type: "string"
+      required: false
+      default: "1"
+    - variable: "logstash_compression"
+      description: "logstash_compression"
+      label: "logstash_compression"
+      type: "string"
+      required: false
+      default: "3"
+    - variable: "environment_env"
+      description: "Elastic Search environment Tag"
+      label: "Elastic Search environment Tag"
+      type: "string"
+      required: True
+      default: "Development"
+      
+
+
+    # - variable: "input_tls_enable"
+    #   description: "Enable TLS encryption"
+    #   label: "input.tls.enable"
+    #   type: "string"
+    #   required: true
+    #   default: "false"
+    # - variable: "input_tls_ca_path"
+    #   description: "Path to the CA file (when TLS is enabled)"
+    #   label: "input.tls.ca_path"
+    #   type: "string"
+    #   required: false
+    #   default: ""
+    # - variable: "input_tls_cert_path"
+    #   description: "Path to the CERT file (when TLS is enabled)"
+    #   label: "input.tls.cert_path"
+    #   type: "string"
+    #   required: false
+    #   default: ""
+    # - variable: "input_tls_key_path"
+    #   description: "Path to the KEY file (when TLS is enabled)"
+    #   label: "input.tls.key_path"
+    #   type: "string"
+    #   required: false
+    #   default: ""
+  
+

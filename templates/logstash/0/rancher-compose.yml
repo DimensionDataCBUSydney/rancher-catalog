@@ -1,0 +1,13 @@
+.catalog:
+  name: "Logstash"
+  version: "5.5.2-PersistentStorage.1"
+  description: "Logstash: Process Any Data, From Any Source"
+  questions:
+    - variable: "elasticsearch_link"
+      description: |
+        stack/service link or external service link to elasticsearch
+        cluster.
+      label: "Elasticsearch stack/service"
+      default: "es/elasticsearch-clients"
+      required: true
+      type: "service"

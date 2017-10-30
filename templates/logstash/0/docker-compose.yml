@@ -1,0 +1,48 @@
+logstash-config:
+  restart: always
+  image: artifactory.devops.itaas-cloud.com:6553/logstash-config:latest
+  volumes:
+   - /usr/share/logstash/config/conf.d
+  labels:
+    io.rancher.container.hostname_override: container_name
+    io.rancher.container.pull_image: always
+    io.rancher.container.start_once: true
+logstash:
+  restart: always
+  environment:
+    path.data: /usr/share/logstash/data
+    path.config: /usr/share/logstash/config/conf.d
+    pipeline.workers: 1
+    log.level: info
+    xpack.monitoring.enabled: true
+    queue.type: persisted
+    queue.max_bytes: 4gb
+    xpack.monitoring.elasticsearch.url: http://es-ingest.es-cluster:9200
+    ES_HOST: es-ingest.es-cluster
+    CONSUL_HEALTH_URL: consul.service-layer-v3-test
+  tty: true
+  external_links:
+  - ${elasticsearch_link}:elasticsearch
+  ports:
+  - 9600:9600
+  - 5044:5044
+  volumes_from:
+  - logstash-config
+  - logstash-data
+  image: docker.elastic.co/logstash/logstash:5.5.2
+  stdin_open: true
+  labels:
+    io.rancher.sidekicks: logstash-config,logstash-data
+    io.rancher.container.hostname_override: container_name
+logstash-data:
+  restart: always
+  image: docker.elastic.co/logstash/logstash:5.5.2
+  volumes:
+    - /usr/share/logstash/data
+  entrypoint:
+    - /bin/true
+  net: none
+  labels:
+    io.rancher.container.hostname_override: container_name
+    io.rancher.container.start_once: true
+    

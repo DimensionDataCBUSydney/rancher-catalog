@@ -1,0 +1,31 @@
+version: '2'
+services:
+  metricbeat:
+    image: artifactory.devops.itaas-cloud.com:6553/metricbeat:latest
+    stdin_open: true
+    #net: "host"
+    environment:
+      PERIOD: ${input_period}
+      #DOCKER_SOCKET: ${input_socket}
+      LOGSTASH_HOSTS: ${logstash_url}
+      LOGSTASH_WORKERS: ${logstash_workers}
+      LOGSTASH_COMPRESSION_LEVEL: ${logstash_compression}
+      ENVIRONMENT_ENV: ${environment_env}
+
+      #DOCKER_ENABLE_TLS: ${input_tls_enable}
+      #DOCKER_CA_PATH: ${input_tls_ca_path}
+      #DOCKER_CERT_PATH: ${input_tls_cert_path}
+      #DOCKER_KEY_PATH: ${input_tls_key_path}
+    external_links:
+    - ${logstash_source}
+    tty: true
+    volumes:
+    - /proc:/hostfs/proc:ro
+    - /sys/fs/cgroup:/hostfs/sys/fs/cgroup:ro
+    - /var/run/docker.sock:/var/run/docker.sock
+    - /:/hostfs:ro
+    labels:
+      io.rancher.container.hostname_override: container_name
+      io.rancher.container.pull_image: always
+      io.rancher.scheduler.global: 'true'
+      

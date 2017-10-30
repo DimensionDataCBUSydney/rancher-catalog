@@ -1,0 +1,7 @@
+name: metricbeat
+description: Dimension Data Research MetricBeat for Rancher Docker logging
+version: 1.0.0.1
+category: Elastic
+maintainer: "Chris Callanan calloes@gmail.com"
+minimum_rancher_version: v1.2.3
+projectURL: https://rancherlab.itaas-cloud.com

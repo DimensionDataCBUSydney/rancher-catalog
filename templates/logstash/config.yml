@@ -1,0 +1,5 @@
+name: Logstash 5.5.2 Persistent Storage
+description: |
+  Centralize data processing of all types
+version: 5.5.2-PersistentStorage
+category: ELK
