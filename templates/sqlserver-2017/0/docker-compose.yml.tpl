@@ -11,6 +11,8 @@ services:
       - $consul_service:consul
     ports:
       - 1433
+    volumes:
+      - $VOLUME_NAME:/var/opt/mssql
     labels:
       io.rancher.sidekicks: sqlscripts
       io.rancher.container.hostname_override: container_name
