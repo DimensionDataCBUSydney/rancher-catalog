@@ -3,3 +3,33 @@
   description: "service layer v3 consul"
   version: "0.1"
   questions:
+    - variable: STORAGE_DRIVER
+      label: Volume Storage Driver (Optional)
+      description: |
+        To use a stack scoped volume backed by a persistent storage service, enter the name
+        of an existing storage driver (see `Infrastructure -> Storage`). This also requires "Volume Name" to be set.
+      required: false
+      default: rancher-nfs
+      type: string
+    - variable: STORAGE_DRIVER_OPT
+      label: Storage Driver Option (Optional)
+      description: |
+        Specify a single "driver_opts" key/value pair in the format "optionName: optionValue ".
+        E.g. for the `rancher-ebs` driver you should specify the required 'size' option like this: "size: 1".
+      required: false
+      default: "onPurge: retain"
+      type: string
+    - variable: VOLUME_NAME
+      label: Volume Name
+      description: |
+        To store the account data, certificates and private keys in a volume, enter the volume name that should be used.
+      required: true
+      type: string
+      default: consul_data
+    - variable: EXTERNAL_VOLUME
+      label: External Volume
+      description: |
+        To store the account data, certificates and private keys in a volume, enter the volume name that should be used.
+      required: false
+      type: boolean
+      default: false

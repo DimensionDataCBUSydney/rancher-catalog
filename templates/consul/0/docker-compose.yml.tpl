@@ -1,16 +1,6 @@
 version: '2'
 services:
-  consul-data:
-    image: alpine:latest
-    entrypoint:
-      - /bin/true
-    labels:
-      io.rancher.container.hostname_override: container_name
-      io.rancher.container.start_once: true
-      io.rancher.container.pull_image: always
-    volumes:
-      - /consul/data
-  
+
   registrator:
     image: gliderlabs/registrator:master
     volumes:
@@ -37,8 +27,8 @@ services:
       - SERVICE_8301_IGNORE=true
       - SERVICE_8302_IGNORE=true
       - SERVICE_8600_IGNORE=true
-    volumes_from:
-      - consul-data
+    volumes:
+      - ${VOLUME_NAME}:/consul/data
     expose:
       - 8300
       - 8301
@@ -50,7 +40,17 @@ services:
       - 8600/udp
     labels:
       io.rancher.container.hostname_override: container_name
-      io.rancher.sidekicks: consul-data
       io.rancher.container.pull_image: always
+
+volumes:
+  {{.Values.VOLUME_NAME}}:
+    {{- if .Values.STORAGE_DRIVER}}
+    driver: {{.Values.STORAGE_DRIVER}}
+    external: {{.Values.EXTERNAL_VOLUME}}
+    {{- if .Values.STORAGE_DRIVER_OPT}}
+    driver_opts:
+      {{.Values.STORAGE_DRIVER_OPT}}
+    {{- end }}
+    {{- end }}
 
   
