@@ -1,0 +1,66 @@
+.catalog:
+  name: "nginx-consultemplate"
+  description: "nginx proxy configuration with Consul Template"
+  version: "0.2"
+  questions:
+    - variable: "consul_service"
+      description: "Link to consul service"
+      label: "Consul Service"
+      type: "service"
+      required: true
+    - variable: "TCP_SSL"
+      description: "ssl for tcp service"
+      label: "SSL for TCP Connection"
+      type: "boolean"
+      required: true
+      default: false
+    - variable: "HTTP_SSL"
+      description: "ssl for http service"
+      label: "SSL for HTTP Connection"
+      type: "boolean"
+      required: true
+      default: false
+    - variable: CERT_NAME
+      label: Certificate Name
+      description: |
+        E.g: `mci.ci.dimensiondata.cloud`.
+      required: true
+      type: certificate
+    - variable: CERT_VOLUME
+      label: Certificate External Volume Name
+      description: 
+      required: false
+      type: "string"
+      default: letsencrypt-cert
+    - variable: STORAGE_DRIVER
+      label: Volume Storage Driver (Optional)
+      description: |
+        To use a stack scoped volume backed by a persistent storage service, enter the name
+        of an existing storage driver (see `Infrastructure -> Storage`). This also requires "Volume Name" to be set.
+      required: false
+      default: rancher-nfs
+      type: string
+version: '2'
+services:
+  haproxy:
+    scale: 1
+    start_on_create: true
+    lb_config:
+      default_cert: ${CERT_NAME}
+      port_rules:
+      - protocol: https
+        service: nginx
+        source_port: 443
+        target_port: 80
+        hostname: ${CERT_NAME}
+      - protocol: tcp
+        service: nginx
+        source_port: 8080
+        target_port: 5672
+        hostname: ${CERT_NAME}
+    health_check:
+      port: 42
+      interval: 2000
+      unhealthy_threshold: 3
+      healthy_threshold: 2
+      response_timeout: 2000
