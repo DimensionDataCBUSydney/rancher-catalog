@@ -36,7 +36,7 @@ services:
       - ${CERT_VOLUME}:/etc/letsencrypt
     ports:
       - 443:443
-      - 5672:5672
+      - 8080:5672
     external_links:
      - $consul_service:consul
     labels:
