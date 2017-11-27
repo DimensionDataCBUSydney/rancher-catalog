@@ -5,7 +5,7 @@ services:
     ports:
       - "${PORT}:8080"
     labels:
-      io.rancher.sidekicks: jenkins-plugins, jenkins-config, jenkins-data
+      io.rancher.sidekicks: jenkins-plugins, jenkins-data
       io.rancher.container.hostname_override: container_name
     volumes_from:
       - jenkins-plugins
@@ -19,8 +19,8 @@ services:
       - Jenkins_User=${Jenkins_User}
       - Jenkins_Pass=${Jenkins_Pass}
       - Jenkins_Port=${PORT}
-    depends_on:
-      - jenkins-primary
+    links:
+      - jenkins-primary:jenkins
     volumes:
       - ${VOLUME_NAME}:/var/jenkins_home
       - ${VOLUME_NAME}:/opt/chefdk
