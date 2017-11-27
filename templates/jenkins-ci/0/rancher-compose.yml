@@ -32,13 +32,13 @@
       swarm
       Pipeline
   - variable: STORAGE_DRIVER
-      label: Volume Storage Driver (Optional)
-      description: |
-        To use a stack scoped volume backed by a persistent storage service, enter the name
-        of an existing storage driver (see `Infrastructure -> Storage`). This also requires "Volume Name" to be set.
-      required: false
-      default: rancher-nfs
-      type: string
+    label: Volume Storage Driver (Optional)
+    description: |
+      To use a stack scoped volume backed by a persistent storage service, enter the name
+      of an existing storage driver (see `Infrastructure -> Storage`). This also requires "Volume Name" to be set.
+    required: false
+    default: rancher-nfs
+    type: string
   - variable: STORAGE_DRIVER_OPT
     label: Storage Driver Option (Optional)
     description: |
