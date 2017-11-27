@@ -17,6 +17,10 @@ services:
     image: rancher/jenkins-plugins:v0.1.1
   jenkins-config:
     image: artifactory.devops.itaas-cloud.com:6553/jenkins-config:latest
+    environment:
+      - Jenkins_User=${Jenkins_User}
+      - Jenkins_Pass=${Jenkins_Pass}
+      - Jenkins_Port=${PORT}
     depends_on:
       - jenkins-primary
     volumes:

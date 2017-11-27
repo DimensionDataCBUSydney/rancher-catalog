@@ -10,6 +10,18 @@
     description: "Which port should Jenkins listen on?"
     default: 8080
     required: true
+  - variable: "Jenkins_User"
+    type: "string"
+    label: "Jenkins Admin User"
+    description: "Jenkins Admin User"
+    default: admin
+    required: true
+  - variable: "Jenkins_Pass"
+    type: "password"
+    label: "Jenkins Admin Password"
+    description: "Jenkins Admin Password"
+    default: admin123
+    required: true
   - variable: "plugins"
     type: "multiline"
     label: "List of Plugins"
