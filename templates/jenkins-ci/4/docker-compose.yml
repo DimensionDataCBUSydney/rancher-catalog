@@ -11,15 +11,8 @@ jenkins-primary:
   entrypoint: /usr/share/jenkins/rancher/jenkins.sh
 jenkins-plugins:
   image: rancher/jenkins-plugins:v0.1.1
-jenkins-terraform:
-  image: 
-  volumes:
-    - /var/jenkins_home/terraform
-    - /var/jenkins_home/jobs
-  labels:
-    io.rancher.container.start_once: true
 jenkins-datavolume:
-  image: "artifactory.devops.itaas-cloud.com:6553/jenkins-terraform:latest"
+  image: artifactory.devops.itaas-cloud.com:6553/jenkins-terraform:latest
   volumes:
     - ${volume_work}:/var/jenkins_home
   labels:
