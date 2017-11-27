@@ -5,14 +5,14 @@ services:
     ports:
       - "${PORT}:8080"
     labels:
-      io.rancher.sidekicks: jenkins-plugins, jenkins-config
+      io.rancher.sidekicks: jenkins-plugins, jenkins-config, jenkins-data
       io.rancher.container.hostname_override: container_name
     volumes:
     - ${VOLUME_NAME}:/var/jenkins_home
     - ${VOLUME_NAME}:/opt/chefdk
     volumes_from:
       - jenkins-plugins
-    entrypoint: /usr/share/jenkins/rancher/jenkins.sh
+    entrypoint: /usr/share/jenkins/rancher/start_jenkins.sh
   jenkins-plugins:
     image: rancher/jenkins-plugins:v0.1.1
   jenkins-config:
@@ -25,6 +25,13 @@ services:
     labels:
       io.rancher.container.start_once: true
       io.rancher.container.pull_image: always
+  jenkins-data:
+    image: busybox
+    volumes:
+      - ${VOLUME_NAME}:/var/jenkins_home
+    entrypoint: ["chown", "-R", "1000:1000", "/var/jenkins_home"]
+    labels:
+      io.rancher.container.start_once: true
 volumes:
   {{.Values.VOLUME_NAME}}:
     {{- if .Values.STORAGE_DRIVER}}
