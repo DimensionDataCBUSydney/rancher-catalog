@@ -7,11 +7,9 @@ services:
     labels:
       io.rancher.sidekicks: jenkins-plugins, jenkins-config, jenkins-data
       io.rancher.container.hostname_override: container_name
-    volumes:
-    - ${VOLUME_NAME}:/var/jenkins_home
-    - ${VOLUME_NAME}:/opt/chefdk
     volumes_from:
       - jenkins-plugins
+      - jenkins-data
     entrypoint: /usr/share/jenkins/rancher/jenkins.sh
   jenkins-plugins:
     image: rancher/jenkins-plugins:v0.1.1
@@ -33,6 +31,7 @@ services:
     image: busybox
     volumes:
       - ${VOLUME_NAME}:/var/jenkins_home
+      - ${VOLUME_NAME}:/opt/chefdk
     entrypoint: ["chown", "-R", "1000:1000", "/var/jenkins_home"]
     labels:
       io.rancher.container.start_once: true
