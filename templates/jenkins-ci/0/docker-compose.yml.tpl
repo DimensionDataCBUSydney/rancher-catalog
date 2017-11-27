@@ -18,7 +18,7 @@ services:
     environment:
       - Jenkins_User=${Jenkins_User}
       - Jenkins_Pass=${Jenkins_Pass}
-      - Jenkins_Port=${PORT}
+      - Jenkins_Port=8080
     links:
       - jenkins-primary:jenkins
     volumes:
