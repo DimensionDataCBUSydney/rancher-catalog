@@ -17,6 +17,7 @@ services:
     image: artifactory.devops.itaas-cloud.com:6553/jenkins-terraform:latest
     volumes:
       - ${VOLUME_NAME}:/var/jenkins_home
+      - /opt/chefdk
     labels:
       io.rancher.container.start_once: true
       io.rancher.container.pull_image: always

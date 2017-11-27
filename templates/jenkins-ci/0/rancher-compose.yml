@@ -31,6 +31,8 @@
       ssh-slaves
       swarm
       Pipeline
+      blueocean
+
   - variable: STORAGE_DRIVER
     label: Volume Storage Driver (Optional)
     description: |
@@ -52,7 +54,7 @@
       To store the account data, certificates and private keys in a volume, enter the volume name that should be used.
     required: true
     type: string
-    default: jenkins-data
+    default: jenkins-config
   - variable: EXTERNAL_VOLUME
     label: External Volume
     description: |
