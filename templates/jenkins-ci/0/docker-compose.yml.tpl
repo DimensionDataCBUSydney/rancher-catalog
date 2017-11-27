@@ -12,7 +12,7 @@ services:
     - ${VOLUME_NAME}:/opt/chefdk
     volumes_from:
       - jenkins-plugins
-    entrypoint: /usr/share/jenkins/rancher/start_jenkins.sh
+    entrypoint: /usr/share/jenkins/rancher/jenkins.sh
   jenkins-plugins:
     image: rancher/jenkins-plugins:v0.1.1
   jenkins-config:
