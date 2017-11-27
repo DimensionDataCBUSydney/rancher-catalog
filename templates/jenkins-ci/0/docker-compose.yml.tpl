@@ -20,7 +20,6 @@ services:
     labels:
       io.rancher.container.start_once: true
       io.rancher.container.pull_image: always
-    entrypoint: /run.sh
 volumes:
   {{.Values.VOLUME_NAME}}:
     {{- if .Values.STORAGE_DRIVER}}
