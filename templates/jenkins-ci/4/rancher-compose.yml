@@ -1,6 +1,6 @@
 .catalog:
   name: Jenkins
-  version: 2.60.1-rancher1
+  version: 2.60.3-rancher1
   description: |
     Jenkins CI management server.
   questions:
@@ -36,6 +36,7 @@
       ssh-credentials
       ssh-slaves
       swarm
+      Pipeline
 jenkins-primary:
   metadata:
     plugins: |
