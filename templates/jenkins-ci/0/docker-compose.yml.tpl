@@ -5,19 +5,23 @@ services:
     ports:
       - "${PORT}:8080"
     labels:
-      io.rancher.sidekicks: jenkins-plugins,jenkins-datavolume
+      io.rancher.sidekicks: jenkins-plugins
       io.rancher.container.hostname_override: container_name
+    volumes:
+    - ${VOLUME_NAME}:/var/jenkins_home
+    - ${VOLUME_NAME}:/opt/chefdk
     volumes_from:
       - jenkins-plugins
-      - jenkins-datavolume
     entrypoint: /usr/share/jenkins/rancher/jenkins.sh
   jenkins-plugins:
     image: rancher/jenkins-plugins:v0.1.1
-  jenkins-datavolume:
-    image: artifactory.devops.itaas-cloud.com:6553/jenkins-terraform:latest
+  jenkins-config:
+    image: artifactory.devops.itaas-cloud.com:6553/jenkins-config:latest
+    depends_on:
+      - jenkins-primary
     volumes:
       - ${VOLUME_NAME}:/var/jenkins_home
-      - /opt/chefdk
+      - ${VOLUME_NAME}:/opt/chefdk
     labels:
       io.rancher.container.start_once: true
       io.rancher.container.pull_image: always

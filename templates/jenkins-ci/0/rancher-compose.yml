@@ -54,7 +54,7 @@
       To store the account data, certificates and private keys in a volume, enter the volume name that should be used.
     required: true
     type: string
-    default: jenkins-config
+    default: jenkins-data
   - variable: EXTERNAL_VOLUME
     label: External Volume
     description: |
