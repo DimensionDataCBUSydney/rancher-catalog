@@ -20,7 +20,7 @@ services:
     labels:
       io.rancher.container.start_once: true
       io.rancher.container.pull_image: always
-    entrypoint: ["cp", "-rf", "/var/jenkins/config/.", "/var/jenkins_home", "&&", "chown", "-R", "1000:1000", "/var/jenkins_home"]
+    entrypoint: /run.sh
 volumes:
   {{.Values.VOLUME_NAME}}:
     {{- if .Values.STORAGE_DRIVER}}
