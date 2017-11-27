@@ -5,7 +5,7 @@ services:
     ports:
       - "${PORT}:8080"
     labels:
-      io.rancher.sidekicks: jenkins-plugins
+      io.rancher.sidekicks: jenkins-plugins, jenkins-config
       io.rancher.container.hostname_override: container_name
     volumes:
     - ${VOLUME_NAME}:/var/jenkins_home
