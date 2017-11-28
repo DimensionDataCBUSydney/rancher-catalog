@@ -23,7 +23,7 @@ services:
       - jenkins-primary:jenkins
     volumes:
       - ${VOLUME_NAME}:/var/jenkins_home
-      - ${VOLUME_NAME}:/opt/chefdk
+      - chefdk:/opt/chefdk
     labels:
       io.rancher.container.start_once: true
       io.rancher.container.pull_image: always
@@ -31,11 +31,18 @@ services:
     image: busybox
     volumes:
       - ${VOLUME_NAME}:/var/jenkins_home
-      - ${VOLUME_NAME}:/opt/chefdk
+      - chefdk:/opt/chefdk
     entrypoint: ["chown", "-R", "1000:1000", "/var/jenkins_home"]
     labels:
       io.rancher.container.start_once: true
 volumes:
+  chefdk:
+    {{- if .Values.STORAGE_DRIVER}}
+    driver: {{.Values.STORAGE_DRIVER}}
+    {{- if .Values.STORAGE_DRIVER_OPT}}
+    driver_opts:
+      {{.Values.STORAGE_DRIVER_OPT}}
+    {{- end }}
   {{.Values.VOLUME_NAME}}:
     {{- if .Values.STORAGE_DRIVER}}
     driver: {{.Values.STORAGE_DRIVER}}
