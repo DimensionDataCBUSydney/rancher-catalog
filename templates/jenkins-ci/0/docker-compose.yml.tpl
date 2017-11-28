@@ -43,6 +43,7 @@ volumes:
     driver_opts:
       {{.Values.STORAGE_DRIVER_OPT}}
     {{- end }}
+    {{- end }}
   {{.Values.VOLUME_NAME}}:
     {{- if .Values.STORAGE_DRIVER}}
     driver: {{.Values.STORAGE_DRIVER}}
