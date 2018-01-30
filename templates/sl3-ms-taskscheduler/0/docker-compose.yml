@@ -3,8 +3,6 @@ services:
   task-scheduler:
     image: artifactory.devops.itaas-cloud.com:6553/task-scheduler:latest
     environment:
-      
-    command: vault server -config=/vault/config/vault.json
     external_links:
       - $consul_service:consul
     labels:
@@ -12,13 +10,11 @@ services:
       io.rancher.sidekicks: task-scheduler-init
       io.rancher.container.pull_image: always
     depends_on:
-      - task-scheduler-init:
+      - task-scheduler-init
 
   task-scheduler-init:
     image: artifactory.devops.itaas-cloud.com:6553/task-scheduler-db:latest
     environment:
-    depends_on:
-      - vault
     labels:
       io.rancher.container.hostname_override: container_name
       io.rancher.container.start_once: true
