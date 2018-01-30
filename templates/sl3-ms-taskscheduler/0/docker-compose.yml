@@ -12,7 +12,7 @@ services:
       - task-scheduler-init
 
   task-scheduler-init:
-    image: artifactory.devops.itaas-cloud.com:6553/task-scheduler-db:latest
+    image: artifactory.devops.itaas-cloud.com:6553/task-scheduler-database:latest
     environment:
       - CONSUL_HTTP_ADDR=consul:8500
       - SERVICE_IGNORE=true
