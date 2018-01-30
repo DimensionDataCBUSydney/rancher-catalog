@@ -1,0 +1,8 @@
+name: Service Layer 3 Microservice Task Scheduler
+description: |
+  Task Scheduler .net Core Micoservice for sevice layer.
+version: 0.1.0
+category: service layer
+maintainer: Dennis Zung <Dennis Zung at Dimension Data >com>
+license: MIT
+projectURL: 
