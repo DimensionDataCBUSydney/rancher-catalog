@@ -15,6 +15,7 @@ services:
   task-scheduler-init:
     image: artifactory.devops.itaas-cloud.com:6553/task-scheduler-db:latest
     environment:
+     - CONSUL_HTTP_ADDR=consul:8500
     external_links:
       - $consul_service:consul
     labels:
