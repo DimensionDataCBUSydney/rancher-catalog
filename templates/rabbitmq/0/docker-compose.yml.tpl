@@ -41,7 +41,7 @@ services:
       - LOCATION_KEY=$location_key
       - GLOBAL=true
     #entrypoint: /opt/rancher/bin/run.sh
-    entrypoint: /etc/rabbitmq/run.sh    
+    entrypoint: /var/lib/rabbitmq/run.sh    
     external_links:
       - $consul_service:consul
     expose:
