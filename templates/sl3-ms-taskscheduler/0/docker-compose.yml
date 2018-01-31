@@ -6,10 +6,11 @@ services:
       - $consul_service:consul
     labels:
       io.rancher.container.hostname_override: container_name
-      io.rancher.sidekicks: task-scheduler-init
+      io.rancher.sidekicks: task-scheduler-init,certificates
       io.rancher.container.pull_image: always
     depends_on:
       - task-scheduler-init
+      - certificates
 
   task-scheduler-init:
     image: artifactory.devops.itaas-cloud.com:6553/task-scheduler-database:latest
@@ -22,3 +23,20 @@ services:
       io.rancher.container.hostname_override: container_name
       io.rancher.container.start_once: true
       io.rancher.container.pull_image: always
+      
+  certificates:
+    image: artifactory.devops.itaas-cloud.com:6553/sl3-certificates:latest
+    environment:
+      - certbasepath=$certbasepath
+      - certname=$certname
+      - cert=$cert
+      - chain=$chain
+      - privatekey=$privatekey
+    labels:
+      io.rancher.container.hostname_override: container_name
+      io.rancher.container.start_once: true
+      io.rancher.container.pull_image: always
+    volumes:
+      - $certbasepath
+
+
