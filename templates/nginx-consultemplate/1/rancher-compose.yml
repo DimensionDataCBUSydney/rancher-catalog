@@ -24,7 +24,7 @@
       label: Certificate Name
       description: |
         E.g: `mci.ci.dimensiondata.cloud`.
-      required: true
+      required: false
       type: certificate
     - variable: CERT_VOLUME
       label: Certificate External Volume Name
