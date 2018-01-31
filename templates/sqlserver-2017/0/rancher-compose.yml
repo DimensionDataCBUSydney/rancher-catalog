@@ -26,20 +26,12 @@
       type: "password"
       required: true
     - variable: STORAGE_DRIVER
-      label: Volume Storage Driver (Optional)
+      label: Volume Storage Driver
       description: |
         To use a stack scoped volume backed by a persistent storage service, enter the name
         of an existing storage driver (see `Infrastructure -> Storage`). This also requires "Volume Name" to be set.
-      required: false
+      required: true
       default: rancher-nfs
-      type: string
-    - variable: STORAGE_DRIVER_OPT
-      label: Storage Driver Option (Optional)
-      description: |
-        Specify a single "driver_opts" key/value pair in the format "optionName: optionValue ".
-        E.g. for the `rancher-ebs` driver you should specify the required 'size' option like this: "size: 1".
-      required: false
-      default: 'onRemove: purge'
       type: string
     - variable: VOLUME_NAME
       label: Volume Name
