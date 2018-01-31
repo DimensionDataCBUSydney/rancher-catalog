@@ -38,4 +38,5 @@ volumes:
   {{.Values.VOLUME_NAME}}:
     {{- if .Values.STORAGE_DRIVER}}
     driver: {{.Values.STORAGE_DRIVER}}
+    external: true
     {{- end }}
