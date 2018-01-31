@@ -12,6 +12,10 @@
       label: "Certificate Location in the Sidekick Container"
       type: "string"
       required: true
+    - variable: volumepath
+      label: "absolute volume path"
+      type: "string"
+      required: true
     - variable: certname
       label: "Certificate Name"
       type: "string"
