@@ -22,9 +22,9 @@ services:
     entrypoint: /bin/true
     network_mode: "none"
     volumes:
-      - ${VOLUME_NAME}:/etc/rabbitmq
-      #- /etc/rabbitmq
-      #- /opt/rancher/bin
+      - ${VOLUME_NAME}:/var/lib/rabbitmq
+      - /etc/rabbitmq
+      - /opt/rancher/bin
     labels:
       io.rancher.container.hostname_override: container_name
       io.rancher.container.start_once: true
