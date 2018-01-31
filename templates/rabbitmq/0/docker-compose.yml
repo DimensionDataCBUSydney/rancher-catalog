@@ -22,8 +22,9 @@ services:
     entrypoint: /bin/true
     network_mode: "none"
     volumes:
-      - /etc/rabbitmq
-      - /opt/rancher/bin
+      - ${VOLUME_NAME}:/etc/rabbitmq
+      #- /etc/rabbitmq
+      #- /opt/rancher/bin
     labels:
       io.rancher.container.hostname_override: container_name
       io.rancher.container.start_once: true
@@ -39,7 +40,8 @@ services:
       - SERVICE_IGNORE=true
       - LOCATION_KEY=$location_key
       - GLOBAL=true
-    entrypoint: /opt/rancher/bin/run.sh
+    #entrypoint: /opt/rancher/bin/run.sh
+    entrypoint: /etc/rabbitmq/run.sh    
     external_links:
       - $consul_service:consul
     expose:
@@ -52,3 +54,14 @@ services:
       io.rancher.container.hostname_override: container_name
       io.rancher.sidekicks: rabbitmq-data, rabbitmq-config
       io.rancher.container.pull_image: always
+
+volumes:
+  {{.Values.VOLUME_NAME}}:
+    {{- if .Values.STORAGE_DRIVER}}
+    driver: {{.Values.STORAGE_DRIVER}}
+    external: {{.Values.EXTERNAL_VOLUME}}
+    {{- if .Values.STORAGE_DRIVER_OPT}}
+    driver_opts:
+      {{.Values.STORAGE_DRIVER_OPT}}
+    {{- end }}
+    {{- end }}
