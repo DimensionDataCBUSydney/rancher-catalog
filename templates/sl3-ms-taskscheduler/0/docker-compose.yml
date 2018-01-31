@@ -11,6 +11,8 @@ services:
     depends_on:
       - task-scheduler-init
       - certificates
+    volumes_from:
+      - certificates
 
   task-scheduler-init:
     image: artifactory.devops.itaas-cloud.com:6553/task-scheduler-database:latest
