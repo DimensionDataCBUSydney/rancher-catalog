@@ -7,7 +7,7 @@ services:
     environment:
       - VAULT_REDIRECT_INTERFACE=eth0
       - SERVICE_8200_NAME=vault
-      - SERVICE_8200_TAGS=http-proxy
+      - SERVICE_8200_TAGS=http-proxy,http
       - SERVICE_8200_ID=vault:8200
       - SERVICE_8200_CHECK_HTTP=/v1/sys/seal-status
       - SERVICE_8200_CHECK_INTERVAL=15s
