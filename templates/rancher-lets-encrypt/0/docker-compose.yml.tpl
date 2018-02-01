@@ -11,6 +11,7 @@ services:
     labels:
       io.rancher.container.hostname_override: container_name
       io.rancher.sidekicks: rancher-lets-encrypt
+      io.rancher.container.pull_image: always
 
   rancher-lets-encrypt:
     image: artifactory.devops.itaas-cloud.com:6553/rancher-lets-encrypt:latest
@@ -32,6 +33,7 @@ services:
       io.rancher.container.hostname_override: container_name
       io.rancher.container.create_agent: 'true'
       io.rancher.container.agent.role: environment
+      io.rancher.container.pull_image: always
 volumes:
   {{.Values.VOLUME_NAME}}:
     {{- if .Values.STORAGE_DRIVER}}
