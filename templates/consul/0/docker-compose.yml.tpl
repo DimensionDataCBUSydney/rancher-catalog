@@ -7,6 +7,7 @@ services:
      - /var/run/docker.sock:/tmp/docker.sock
     command:
      - -internal=false
+     - -ip=`wget -q http://rancher-metadata/2015-07-25/self/host/agent_ip -O agent_ip; cat agent_ip`
      - consul://consul:8500
 
     labels:
