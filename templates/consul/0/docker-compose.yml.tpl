@@ -8,11 +8,8 @@ services:
     volumes:
      - /var/run/docker.sock:/tmp/docker.sock
     command:
-     - /bin/registrator
      - -internal=false
-     - -ip=$${HOSTIP}
      - consul://consul:8500
-    entrypoint: bin/sh -c
 
     labels:
       io.rancher.container.hostname_override: container_name
