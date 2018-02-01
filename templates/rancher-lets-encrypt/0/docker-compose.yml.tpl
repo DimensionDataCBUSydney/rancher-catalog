@@ -13,12 +13,13 @@ services:
       io.rancher.sidekicks: rancher-lets-encrypt
 
   rancher-lets-encrypt:
-    image: tozny/rancher-lets-encrypt
+    image: artifactory.devops.itaas-cloud.com:6553/rancher-lets-encrypt:latest
     environment:
       - SERVICE_IGNORE=true
       - DOMAINS=${DOMAINS}
       - CERTBOT_WEBROOT=${CERTBOT_WEBROOT}
       - CERTBOT_EMAIL=${CERTBOT_EMAIL}
+      - SAN=${SAN}
       - RENEW_BEFORE_DAYS=${RENEW_BEFORE_DAYS}
       - LOOP_TIME=${LOOP_TIME}
       - STAGING=${STAGING}

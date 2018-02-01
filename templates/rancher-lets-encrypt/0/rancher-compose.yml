@@ -7,10 +7,16 @@ catalog:
   minimum_rancher_version: v1.1.0
   questions:
     - variable: DOMAINS
-      label: Domain Names
+      label: Domain Name
       description: |
-        E.g: `example.com,test.com`.
+        E.g: `example.com`.
       required: true
+      type: string
+    - variable: SAN
+      label: Subject Alternate Names
+      description: |
+        E.g: `test.com`.
+      required: false
       type: string
     - variable: CERTBOT_WEBROOT
       label: Certbot Webroot
