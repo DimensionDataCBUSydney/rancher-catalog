@@ -3,6 +3,8 @@ services:
 
   registrator:
     image: gliderlabs/registrator:master
+    environment:
+     - HOSTIP=$$(wget -q http://rancher-metadata/2015-07-25/self/host/agent_ip -O agent_ip; cat agent_ip)
     volumes:
      - /var/run/docker.sock:/tmp/docker.sock
     command:
@@ -10,7 +12,7 @@ services:
      - -internal=false
      - -ip=$${HOSTIP}
      - consul://consul:8500
-    entrypoint: bin/sh -c export HOSTIP=$$(wget -q http://rancher-metadata/2015-07-25/self/host/agent_ip -O agent_ip; cat agent_ip);
+    entrypoint: bin/sh -c
 
     labels:
       io.rancher.container.hostname_override: container_name
