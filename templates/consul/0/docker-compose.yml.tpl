@@ -8,7 +8,7 @@ services:
     command:
      - /bin/registrator
      - -internal=false
-     - -ip=`wget -q http://rancher-metadata/2015-07-25/self/host/agent_ip -O agent_ip; cat agent_ip`
+     - -ip="$(wget -q http://rancher-metadata/2015-07-25/self/host/agent_ip -O agent_ip; cat agent_ip)"
      - consul://consul:8500
     entrypoint: bin/sh -c
 
