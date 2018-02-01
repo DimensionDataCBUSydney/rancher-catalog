@@ -8,9 +8,9 @@ services:
     command:
      - /bin/registrator
      - -internal=false
-     - -ip="$(wget -q http://rancher-metadata/2015-07-25/self/host/agent_ip -O agent_ip; cat agent_ip)"
+     - -ip=$${HOSTIP}
      - consul://consul:8500
-    entrypoint: bin/sh -c
+    entrypoint: bin/sh -c export HOSTIP=$$(wget -q http://rancher-metadata/2015-07-25/self/host/agent_ip -O agent_ip; cat agent_ip);
 
     labels:
       io.rancher.container.hostname_override: container_name
