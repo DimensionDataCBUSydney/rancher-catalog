@@ -47,6 +47,8 @@ services:
     expose:
       - 5672
       - 15672
+    ports:
+      - 5672:5672
     volumes_from:
       - rabbitmq-data
     restart: always

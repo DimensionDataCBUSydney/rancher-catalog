@@ -6,8 +6,7 @@ services:
     volumes:
      - /var/run/docker.sock:/tmp/docker.sock
     command:
-     - -internal=true
-     - -useIpFromLabel=io.rancher.container.ip
+     - -internal=false
      - consul://consul:8500
 
     labels:
@@ -38,6 +37,15 @@ services:
       - 8500
       - 8600
       - 8600/udp
+    ports:
+      - 8300:8300
+      - 8301:8301
+      - 8301:8301/udp
+      - 8302:8302
+      - 8302:8302/udp
+      - 8500:8500
+      - 8600:8600
+      - 8600:8600/udp
     labels:
       io.rancher.container.hostname_override: container_name
       io.rancher.container.pull_image: always

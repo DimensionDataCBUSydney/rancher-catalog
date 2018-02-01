@@ -17,6 +17,8 @@ services:
       - $consul_service:consul
     expose:
       - 8200
+    ports:
+      - 8200:8200
     volumes_from:
       - vault-config
     labels:
