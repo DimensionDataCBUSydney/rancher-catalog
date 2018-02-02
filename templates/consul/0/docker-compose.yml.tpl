@@ -3,12 +3,11 @@ services:
 
   registrator:
     image: gliderlabs/registrator:master
-    environment:
-     - HOSTIP=$$(wget -q http://rancher-metadata/2015-07-25/self/host/agent_ip -O agent_ip; cat agent_ip)
     volumes:
      - /var/run/docker.sock:/tmp/docker.sock
     command:
      - -internal=false
+     - -useIpFromLabel=io.rancher.container.ip
      - consul://consul:8500
 
     labels:
@@ -20,10 +19,7 @@ services:
     image: artifactory.devops.itaas-cloud.com:6553/consul-base:latest
     environment:
       - rancher=1
-      - SERVICE_TAGS=http-proxy
-      - SERVICE_8500_NAME=consulapi
-      - SERVICE_8500_TAGS=http-proxy
-      - SERVICE_8500_ID=consulapi
+      - SERVICE_8500_IGNORE=true
       - SERVICE_8300_IGNORE=true
       - SERVICE_8301_IGNORE=true
       - SERVICE_8302_IGNORE=true
