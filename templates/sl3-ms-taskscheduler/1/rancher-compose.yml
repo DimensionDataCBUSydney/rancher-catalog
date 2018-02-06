@@ -1,0 +1,30 @@
+.catalog:
+  name: "sl3-ms-taskscheduler"
+  description: "Service Layer 3 Microservice Task Scheduler"
+  version: "0.2"
+  questions:
+    - variable: "consul_service"
+      description: "Link to consul service"
+      label: "Consul Service"
+      type: "service"
+      required: true
+    - variable: certbasepath
+      label: "Certificate Location in the Sidekick Container"
+      type: "string"
+      required: true
+    - variable: certname
+      label: "Certificate Name"
+      type: "string"
+      required: true
+    - variable: cert
+      label: "PEM Encoded Certificate"
+      type: "multiline"
+      required: true
+    - variable: chain
+      label: "PEM Encoded Certificate Chain"
+      type: "multiline"
+      required: false
+    - variable: privatekey
+      label: "PEM Encoded private key"
+      type: "multiline"
+      required: false
