@@ -39,6 +39,8 @@ services:
       - 8080:5672
     external_links:
      - $consul_service:consul
+     extra_hosts:
+     - $extra_host
     labels:
       io.rancher.container.hostname_override: container_name
       io.rancher.sidekicks: nginx-config,nginx-log
