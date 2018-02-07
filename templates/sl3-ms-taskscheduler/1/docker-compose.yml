@@ -22,7 +22,7 @@ services:
       - certificates
 
   task-scheduler-init:
-    image: artifactory.devops.itaas-cloud.com:6553/task-scheduler-database:latest
+    image: artifactory.devops.itaas-cloud.com:6553/task-scheduler-init:latest
     environment:
       - CONSUL_HTTP_ADDR=consul:8500
       - SERVICE_IGNORE=true
@@ -32,6 +32,20 @@ services:
       io.rancher.container.hostname_override: container_name
       io.rancher.container.start_once: true
       io.rancher.container.pull_image: always
+      
+  task-scheduler-final:
+    image: artifactory.devops.itaas-cloud.com:6553/task-scheduler-final:latest
+    environment:
+      - CONSUL_HTTP_ADDR=consul:8500
+      - SERVICE_IGNORE=true
+    external_links:
+      - $consul_service:consul
+    labels:
+      io.rancher.container.hostname_override: container_name
+      io.rancher.container.start_once: true
+      io.rancher.container.pull_image: always
+    depends_on:
+      - task-scheduler
 
   certificates:
     image: artifactory.devops.itaas-cloud.com:6553/sl3-certificates:latest
