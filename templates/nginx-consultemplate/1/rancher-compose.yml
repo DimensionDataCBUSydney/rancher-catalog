@@ -40,9 +40,4 @@
       required: false
       default: rancher-nfs
       type: string
-    - variable: extra_host
-      label: HOST FILE ENTRY
-      description: 
-      required: false
-      type: "string"
-      default: windows:10.10.10.52
+  
