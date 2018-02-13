@@ -11,6 +11,7 @@ services:
       - SERVICE_TAGS=http-proxy
     external_links:
       - $consul_service:consul
+      - $sql_server:AU09MCISQLCL01
     labels:
       io.rancher.container.hostname_override: container_name
       io.rancher.sidekicks: certificates
@@ -28,6 +29,7 @@ services:
       - SERVICE_IGNORE=true
     external_links:
       - $consul_service:consul
+      - $sql_server:AU09MCISQLCL01
     labels:
       io.rancher.container.hostname_override: container_name
       io.rancher.container.pull_image: always
@@ -39,6 +41,7 @@ services:
       - SERVICE_IGNORE=true
     external_links:
       - $consul_service:consul
+      - $sql_server:AU09MCISQLCL01
     labels:
       io.rancher.container.hostname_override: container_name
       io.rancher.container.start_once: true

@@ -8,6 +8,11 @@
       label: "Consul Service"
       type: "service"
       required: true
+    - variable: "sql_server"
+      description: "Link to SQL server"
+      label: "SQL Server"
+      type: "service"
+      required: false
     - variable: certbasepath
       label: "Certificate Location in the Sidekick Container"
       type: "string"
