@@ -4,7 +4,7 @@ services:
     image: artifactory.devops.itaas-cloud.com:6553/task-scheduler:latest
     environment:
       - CONSUL_HTTP_ADDR=consul:8500
-      - SERVICE_NAME=ts1
+      - SERVICE_NAME=ts12
       - SERVICE_CHECK_HTTP=/health
       - SERVICE_CHECK_INTERVAL=15s
       - SERVICE_CHECK_TIMEOUT=1s
