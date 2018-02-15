@@ -38,3 +38,8 @@
       label: "Consul External Service"
       type: "string"
       required: true
+    - variable: "datacenter"
+      description: "Data Center to Join"
+      label: "Data Center to Join"
+      type: "string"
+      required: true
