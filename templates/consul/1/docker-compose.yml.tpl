@@ -20,6 +20,7 @@ services:
     environment:
       - rancher=1
       - external_consul=${consul_external_service}
+      - datacenter=${datacenter}
       - SERVICE_8500_IGNORE=true
       - SERVICE_8300_IGNORE=true
       - SERVICE_8301_IGNORE=true
