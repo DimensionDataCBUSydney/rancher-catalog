@@ -3,33 +3,33 @@
   description: "Service Layer 3 Microservice Task Scheduler"
   version: "0.2"
   questions:
-    - variable: "consul_service"
+    - variable: ConsulServiceLink
       description: "Link to consul service"
       label: "Consul Service"
       type: "service"
       required: true
-    - variable: "sql_server"
+    - variable: SqlServiceLink
       description: "Link to SQL server"
       label: "SQL Server"
       type: "service"
       required: false
-    - variable: certbasepath
+    - variable: CertBasePath
       label: "Certificate Location in the Sidekick Container"
       type: "string"
       required: true
-    - variable: certname
+    - variable: CertName
       label: "Certificate Name"
       type: "string"
       required: true
-    - variable: cert
+    - variable: Cert
       label: "PEM Encoded Certificate"
       type: "multiline"
       required: true
-    - variable: chain
+    - variable: Chain
       label: "PEM Encoded Certificate Chain"
       type: "multiline"
       required: false
-    - variable: privatekey
+    - variable: PrivateKey
       label: "PEM Encoded private key"
       type: "multiline"
       required: false

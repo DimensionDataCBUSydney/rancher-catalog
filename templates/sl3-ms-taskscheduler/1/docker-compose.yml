@@ -10,8 +10,8 @@ services:
       - SERVICE_CHECK_TIMEOUT=1s
       - SERVICE_TAGS=http-proxy
     external_links:
-      - $consul_service:consul
-      - $sql_server:AU09MCISQLCL01
+      - $ConsulServiceLink:consul
+      - $SqlServiceLink:AU09MCISQLCL01
     labels:
       io.rancher.container.hostname_override: container_name
       io.rancher.sidekicks: certificates
@@ -28,8 +28,8 @@ services:
       - CONSUL_HTTP_ADDR=consul:8500
       - SERVICE_IGNORE=true
     external_links:
-      - $consul_service:consul
-      - $sql_server:AU09MCISQLCL01
+      - $ConsulServiceLink:consul
+      - $SqlServiceLink:AU09MCISQLCL01
     labels:
       io.rancher.container.hostname_override: container_name
       io.rancher.container.pull_image: always
@@ -40,8 +40,8 @@ services:
       - CONSUL_HTTP_ADDR=consul:8500
       - SERVICE_IGNORE=true
     external_links:
-      - $consul_service:consul
-      - $sql_server:AU09MCISQLCL01
+      - $ConsulServiceLink:consul
+      - $SqlServiceLink:AU09MCISQLCL01
     labels:
       io.rancher.container.hostname_override: container_name
       io.rancher.container.start_once: true
@@ -52,16 +52,16 @@ services:
   certificates:
     image: artifactory.devops.itaas-cloud.com:6553/sl3-certificates:latest
     environment:
-      - certbasepath=$certbasepath
-      - certname=$certname
-      - cert=$cert
-      - chain=$chain
-      - privatekey=$privatekey
+      - certbasepath=$CertBasePath
+      - certname=$CertName
+      - cert=$Cert
+      - chain=$Chain
+      - privatekey=$PrivateKey
     labels:
       io.rancher.container.hostname_override: container_name
       io.rancher.container.start_once: true
       io.rancher.container.pull_image: always
     volumes:
-      - ${certbasepath}/${certname}
+      - ${CertBasePath}/${CertName}
 
 
