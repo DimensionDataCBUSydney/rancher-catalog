@@ -1,7 +1,7 @@
 version: '2'
 services:
   task-scheduler:
-    image: artifactory.devops.itaas-cloud.com:6553/task-scheduler:1.2.26.0
+    image: artifactory.devops.itaas-cloud.com:6553/task-scheduler:${ImageVersion}
     environment:
       - CONSUL_HTTP_ADDR=consul:8500
       - SERVICE_NAME=ts12
@@ -23,7 +23,7 @@ services:
       - certificates
 
   task-scheduler-init:
-    image: artifactory.devops.itaas-cloud.com:6553/task-scheduler-init:1.2.26.0
+    image: artifactory.devops.itaas-cloud.com:6553/task-scheduler-init:${ImageVersion}
     environment:
       - CONSUL_HTTP_ADDR=consul:8500
       - SERVICE_IGNORE=true
@@ -36,7 +36,7 @@ services:
       io.rancher.container.pull_image: always
 
   task-scheduler-final:
-    image: artifactory.devops.itaas-cloud.com:6553/task-scheduler-final:1.2.26.0
+    image: artifactory.devops.itaas-cloud.com:6553/task-scheduler-final:${ImageVersion}
     environment:
       - CONSUL_HTTP_ADDR=consul:8500
       - SERVICE_IGNORE=true

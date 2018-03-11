@@ -13,6 +13,10 @@
       label: "SQL Server"
       type: "service"
       required: false
+    - variable: ImageVersion
+      label: "Microservice Image Version"
+      type: "string"
+      required: true
     - variable: CertBasePath
       label: "Certificate Location in the Sidekick Container"
       type: "string"
