@@ -8,11 +8,6 @@
       label: "Consul Service"
       type: "service"
       required: true
-    - variable: SqlServiceLink
-      description: "Link to SQL server"
-      label: "SQL Server"
-      type: "service"
-      required: false
     - variable: ImageVersion
       label: "Microservice Image Version"
       type: "string"
