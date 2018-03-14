@@ -1,0 +1,14 @@
+.catalog:
+  name: "sl3-ms-taskscheduler"
+  description: "Service Layer 3 Microservice Task Scheduler"
+  version: "0.3"
+  questions:
+    - variable: ConsulServiceLink
+      description: "Link to consul service"
+      label: "Consul Service"
+      type: "service"
+      required: true
+    - variable: ImageVersion
+      label: "Microservice Image Version"
+      type: "string"
+      required: true

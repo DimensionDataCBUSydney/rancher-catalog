@@ -1,0 +1,44 @@
+version: '2'
+services:
+  task-scheduler:
+    image: artifactory.devops.itaas-cloud.com:6553/task-scheduler:${ImageVersion}
+    environment:
+      - CONSUL_HTTP_ADDR=consul:8500
+      - SERVICE_NAME=ts12
+      - SERVICE_CHECK_HTTP=/health
+      - SERVICE_CHECK_INTERVAL=15s
+      - SERVICE_CHECK_TIMEOUT=1s
+      - SERVICE_TAGS=http-proxy
+    external_links:
+      - $ConsulServiceLink:consul
+    labels:
+      io.rancher.container.hostname_override: container_name
+      io.rancher.container.pull_image: always
+    depends_on:
+      - task-scheduler-init
+
+  task-scheduler-init:
+    image: artifactory.devops.itaas-cloud.com:6553/task-scheduler-init:${ImageVersion}
+    environment:
+      - CONSUL_HTTP_ADDR=consul:8500
+      - SERVICE_IGNORE=true
+    external_links:
+      - $ConsulServiceLink:consul
+    labels:
+      io.rancher.container.hostname_override: container_name
+      io.rancher.container.start_once: true
+      io.rancher.container.pull_image: always
+
+  task-scheduler-final:
+    image: artifactory.devops.itaas-cloud.com:6553/task-scheduler-final:${ImageVersion}
+    environment:
+      - CONSUL_HTTP_ADDR=consul:8500
+      - SERVICE_IGNORE=true
+    external_links:
+      - $ConsulServiceLink:consul
+    labels:
+      io.rancher.container.hostname_override: container_name
+      io.rancher.container.start_once: true
+      io.rancher.container.pull_image: always
+    depends_on:
+      - task-scheduler
